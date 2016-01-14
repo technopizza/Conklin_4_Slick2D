@@ -466,7 +466,7 @@ public class Unwavering extends BasicGameState {
                 // The lower the delta the slower the sprite will animate.
 
 
-                Player.y -= fdelta;
+                Player.y -= 8;
 
                 moveenemies();
 
@@ -483,7 +483,7 @@ public class Unwavering extends BasicGameState {
 
                 sprite.update(delta);
 
-                Player.y += fdelta;
+                Player.y += 8;
 
                 moveenemies();
 
@@ -500,7 +500,7 @@ public class Unwavering extends BasicGameState {
 
                 sprite.update(delta);
 
-                Player.x -= fdelta;
+                Player.x -= 8;
 
                 moveenemies();
 
@@ -519,7 +519,7 @@ public class Unwavering extends BasicGameState {
 
                 sprite.update(delta);
 
-                Player.x += fdelta;
+                Player.x += 8;
 
                 moveenemies();
 
