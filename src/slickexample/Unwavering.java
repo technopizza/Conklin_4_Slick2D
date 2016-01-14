@@ -245,7 +245,7 @@ public class Unwavering extends BasicGameState {
         // You could also use this for planning traps, etc.
         // System.out.println("Number of tile layers: "
         // +grassMap.getLayerCount());
-        System.out.println("The grassmap is " + grassMap.getWidth() + "by "
+        System.out.println("The grassmap is " + grassMap.getWidth() + " by "
                 + grassMap.getHeight());
 
         for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
@@ -264,8 +264,8 @@ public class Unwavering extends BasicGameState {
 
                 if ("true".equals(value)) {
 
-                    System.out.println("The tile at x " + xAxis + " andy axis "
-                            + yAxis + " is blocked.");
+                    System.out.println("The tile at (" + xAxis + ", "
+                            + yAxis + ") is blocked.");
 
                     Blocked.blocked[xAxis][yAxis] = true;
 
@@ -320,7 +320,7 @@ public class Unwavering extends BasicGameState {
         stuff.add(healthpotion1);
 
         smallprize = new Treasure(450, 250);
-        grandprize = new Treasure(100, 250);
+        grandprize = new Treasure(200, 250);
         
         treasures.add(smallprize);
         treasures.add(grandprize);
@@ -366,7 +366,7 @@ public class Unwavering extends BasicGameState {
         g.drawString("treasure: " + (int) (Player.gold), camera.cameraX + 10,
                 camera.cameraY + 40);
 
-        //g.draw(player.rect);
+        g.draw(Player.rect);
         g.drawString("time passed: " + counter / 1000, camera.cameraX + 600, camera.cameraY);
         // moveenemies();
 
