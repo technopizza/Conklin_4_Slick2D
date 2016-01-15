@@ -131,25 +131,27 @@ public class Unwavering extends BasicGameState {
         // System.out.println("Vertical count: " +runningSS.getVerticalCount());
         up = new Animation();
 
-        up.setAutoUpdate(true);
+        up.setAutoUpdate(false);
 
-        up.addFrame(runningSS.getSprite(0, 8), 330);
+       
+        
+        up.addFrame(runningSS.getSprite(0, 8), 110);
 
-        up.addFrame(runningSS.getSprite(1, 8), 330);
+        up.addFrame(runningSS.getSprite(1, 8), 110);
 
-        up.addFrame(runningSS.getSprite(2, 8), 330);
+        up.addFrame(runningSS.getSprite(2, 8), 110);
 
-        up.addFrame(runningSS.getSprite(3, 8), 330);
+        up.addFrame(runningSS.getSprite(3, 8), 110);
 
-        up.addFrame(runningSS.getSprite(4, 8), 330);
+        up.addFrame(runningSS.getSprite(4, 8), 110);
 
-        up.addFrame(runningSS.getSprite(5, 8), 330);
+        up.addFrame(runningSS.getSprite(5, 8), 110);
 
-        up.addFrame(runningSS.getSprite(6, 8), 330);
+        up.addFrame(runningSS.getSprite(6, 8), 110);
 
-        up.addFrame(runningSS.getSprite(7, 8), 330);
+        up.addFrame(runningSS.getSprite(7, 8), 110);
 
-        up.addFrame(runningSS.getSprite(8, 8), 330);
+        up.addFrame(runningSS.getSprite(8, 8), 110);
 
         down = new Animation();
 
@@ -466,7 +468,7 @@ public class Unwavering extends BasicGameState {
                 // The lower the delta the slower the sprite will animate.
 
 
-                Player.y -= 8;
+                Player.y -= 4;
 
                 moveenemies();
 
@@ -483,7 +485,7 @@ public class Unwavering extends BasicGameState {
 
                 sprite.update(delta);
 
-                Player.y += 8;
+                Player.y += 4;
 
                 moveenemies();
 
@@ -500,7 +502,7 @@ public class Unwavering extends BasicGameState {
 
                 sprite.update(delta);
 
-                Player.x -= 8;
+                Player.x -= 4;
 
                 moveenemies();
 
@@ -519,7 +521,7 @@ public class Unwavering extends BasicGameState {
 
                 sprite.update(delta);
 
-                Player.x += 8;
+                Player.x += 4;
 
                 moveenemies();
 
