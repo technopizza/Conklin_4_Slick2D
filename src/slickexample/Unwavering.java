@@ -63,6 +63,7 @@ public class Unwavering extends BasicGameState {
     public ArrayList<Treasure> treasures = new ArrayList();
 
     public ArrayList<Enemy> enemies = new ArrayList();
+    public ArrayList<Enemy> enemiesBow = new ArrayList();
 
     public ArrayList<Item> stuff = new ArrayList();
 
@@ -414,8 +415,8 @@ public class Unwavering extends BasicGameState {
         treasures.add(smallprize);
         treasures.add(grandprize);
 
-        // indian1= new Enemy(450, 100);
-        //indian2= new Enemy(550, 100);
+       // indian1= new Enemy(448, 64, "down");
+       // indian2= new Enemy(576, 192);
         // indian3= new Enemy(650, 100);
         //enemies.add(indian1);
         //enemies.add(indian2);
