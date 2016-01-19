@@ -50,21 +50,20 @@ import org.w3c.dom.css.Rect;
 
 public class Unwavering extends BasicGameState {
 
-    public Item healthpotion, healthpotion1;
-    public Item1 speedpotion, speedpotion1;
-    public ItemWin antidote;
-    public Ninja ninja;
-    public Enemy indian1;
-    public Enemy indian2;
-    public Enemy indian3;
-    
+//    public Item healthpotion, healthpotion1;
+//    public Item1 speedpotion, speedpotion1;
+//    public ItemWin antidote;
+//    public Ninja ninja;
+    //public Enemy indian1;
+    //public Enemy indian2;
+    //public Enemy indian3;
     Treasure smallprize;
     Treasure grandprize;
 
     public ArrayList<Treasure> treasures = new ArrayList();
-    
+
     public ArrayList<Enemy> enemies = new ArrayList();
-    
+
     public ArrayList<Item> stuff = new ArrayList();
 
     public ArrayList<Item1> stuff1 = new ArrayList();
@@ -82,8 +81,10 @@ public class Unwavering extends BasicGameState {
     public static int counter = 0;
 
     // Player stuff
-    private Animation sprite, up, down, left, right, wait;
-
+    private Animation sprite, walkUp, walkDown, walkLeft, walkRight, faceUp, faceDown, faceLeft, faceRight,
+            thrustUp, thrustDown, thrustLeft, thrustRight, wait;
+    boolean attacking = false; int attackCounter = 0;
+    String direction = "down";
     /**
      *
      * The collision map indicating which tiles block movement - generated based
@@ -91,12 +92,13 @@ public class Unwavering extends BasicGameState {
      * on tile properties
      */
     // changed to match size of sprites & map
-    private static final int SIZE = 64;
-
+    private static final int tileSize = 64;
+    private static final int tilesX = 50;
+    private static final int tilesY = 100;
     // screen width and height won't change
-    private static final int SCREEN_WIDTH = 1000;
-
-    private static final int SCREEN_HEIGHT = 750;
+    private static final int SCREEN_WIDTH = tilesX * tileSize;
+    private static int currentsteps = 0;
+    private static final int SCREEN_HEIGHT = tilesY * tileSize;
 
     public Unwavering(int xSize, int ySize) {
 
@@ -124,100 +126,189 @@ public class Unwavering extends BasicGameState {
         // and classes
         // *********************************************************************************
         SpriteSheet runningSS = new SpriteSheet(
-                "res/explorer.png", 64, 64, 0);
+                "res/explorerSpear.png", 64, 64, 0);
 
         // System.out.println("Horizontal count: "
         // +runningSS.getHorizontalCount());
         // System.out.println("Vertical count: " +runningSS.getVerticalCount());
-        up = new Animation();
+        faceUp = new Animation();
+        faceUp.addFrame(runningSS.getSprite(0, 8), 110);
 
-        up.setAutoUpdate(false);
+        walkUp = new Animation();
+
+        walkUp.setAutoUpdate(false);
+        walkUp.addFrame(runningSS.getSprite(0, 8), 200);
+        walkUp.addFrame(runningSS.getSprite(1, 8), 200);
+
+        walkUp.addFrame(runningSS.getSprite(2, 8), 200);
+
+        walkUp.addFrame(runningSS.getSprite(3, 8), 200);
+
+        walkUp.addFrame(runningSS.getSprite(4, 8), 200);
+
+        walkUp.addFrame(runningSS.getSprite(5, 8), 200);
+
+        walkUp.addFrame(runningSS.getSprite(6, 8), 200);
+
+        walkUp.addFrame(runningSS.getSprite(7, 8), 200);
+
+        walkUp.addFrame(runningSS.getSprite(8, 8), 200);
+
+        faceDown = new Animation();
+        faceDown.addFrame(runningSS.getSprite(0, 10), 330);
+
+        walkDown = new Animation();
+
+        walkDown.setAutoUpdate(false);
+
+        walkDown.addFrame(runningSS.getSprite(0, 10), 200);
+        walkDown.addFrame(runningSS.getSprite(1, 10), 200);
+
+        walkDown.addFrame(runningSS.getSprite(2, 10), 200);
+
+        walkDown.addFrame(runningSS.getSprite(3, 10), 200);
+
+        walkDown.addFrame(runningSS.getSprite(4, 10), 200);
+
+        walkDown.addFrame(runningSS.getSprite(5, 10), 200);
+
+        walkDown.addFrame(runningSS.getSprite(6, 10), 200);
+
+        walkDown.addFrame(runningSS.getSprite(7, 10), 200);
+
+        walkDown.addFrame(runningSS.getSprite(8, 10), 200);
+
+        faceLeft = new Animation();
+        faceLeft.addFrame(runningSS.getSprite(0, 9), 330);
+
+        walkLeft = new Animation();
+
+        walkLeft.setAutoUpdate(false);
+
+        walkLeft.addFrame(runningSS.getSprite(0, 9), 200);
+        walkLeft.addFrame(runningSS.getSprite(1, 9), 200);
+
+        walkLeft.addFrame(runningSS.getSprite(2, 9), 200);
+
+        walkLeft.addFrame(runningSS.getSprite(3, 9), 200);
+
+        walkLeft.addFrame(runningSS.getSprite(4, 9), 200);
+
+        walkLeft.addFrame(runningSS.getSprite(5, 9), 200);
+
+        walkLeft.addFrame(runningSS.getSprite(6, 9), 200);
+
+        walkLeft.addFrame(runningSS.getSprite(7, 9), 200);
+
+        walkLeft.addFrame(runningSS.getSprite(8, 9), 200);
+
+        faceRight = new Animation();
+        faceRight.addFrame(runningSS.getSprite(0, 11), 200);
+
+        walkRight = new Animation();
+
+        walkRight.setAutoUpdate(false);
+
+        walkRight.addFrame(runningSS.getSprite(0, 11), 200);
+        walkRight.addFrame(runningSS.getSprite(1, 11), 200);
+
+        walkRight.addFrame(runningSS.getSprite(2, 11), 200);
+
+        walkRight.addFrame(runningSS.getSprite(3, 11), 200);
+
+        walkRight.addFrame(runningSS.getSprite(4, 11), 200);
+
+        walkRight.addFrame(runningSS.getSprite(5, 11), 200);
+
+        walkRight.addFrame(runningSS.getSprite(6, 11), 200);
+
+        walkRight.addFrame(runningSS.getSprite(7, 11), 200);
+
+        walkRight.addFrame(runningSS.getSprite(8, 11), 200);
+
+        thrustRight = new Animation();
+
+        thrustRight.setAutoUpdate(false);
+
+        thrustRight.addFrame(runningSS.getSprite(0, 7), 200);
+        thrustRight.addFrame(runningSS.getSprite(1, 7), 200);
+
+        thrustRight.addFrame(runningSS.getSprite(2, 7), 200);
+
+        thrustRight.addFrame(runningSS.getSprite(3, 7), 200);
+
+        thrustRight.addFrame(runningSS.getSprite(4, 7), 200);
+
+        thrustRight.addFrame(runningSS.getSprite(5, 7), 200);
+
+        thrustRight.addFrame(runningSS.getSprite(6, 7), 200);
+
+        thrustRight.addFrame(runningSS.getSprite(7, 7), 200);
 
        
+
+        thrustLeft = new Animation();
+
+        thrustLeft.setAutoUpdate(false);
+
+        thrustLeft.addFrame(runningSS.getSprite(0, 5), 200);
+        thrustLeft.addFrame(runningSS.getSprite(1, 5), 200);
+
+        thrustLeft.addFrame(runningSS.getSprite(2, 5), 200);
+
+        thrustLeft.addFrame(runningSS.getSprite(3, 5), 200);
+
+        thrustLeft.addFrame(runningSS.getSprite(4, 5), 200);
+
+        thrustLeft.addFrame(runningSS.getSprite(5, 5), 200);
+
+        thrustLeft.addFrame(runningSS.getSprite(6, 5), 200);
+
+        thrustLeft.addFrame(runningSS.getSprite(7, 5), 200);
+
         
-        up.addFrame(runningSS.getSprite(0, 8), 110);
 
-        up.addFrame(runningSS.getSprite(1, 8), 110);
+        thrustUp = new Animation();
 
-        up.addFrame(runningSS.getSprite(2, 8), 110);
+        thrustUp.setAutoUpdate(false);
 
-        up.addFrame(runningSS.getSprite(3, 8), 110);
+        thrustUp.addFrame(runningSS.getSprite(0, 4), 200);
+        thrustUp.addFrame(runningSS.getSprite(1, 4), 200);
 
-        up.addFrame(runningSS.getSprite(4, 8), 110);
+        thrustUp.addFrame(runningSS.getSprite(2, 4), 200);
 
-        up.addFrame(runningSS.getSprite(5, 8), 110);
+        thrustUp.addFrame(runningSS.getSprite(3, 4), 200);
 
-        up.addFrame(runningSS.getSprite(6, 8), 110);
+        thrustUp.addFrame(runningSS.getSprite(4, 4), 200);
 
-        up.addFrame(runningSS.getSprite(7, 8), 110);
+        thrustUp.addFrame(runningSS.getSprite(5, 4), 200);
 
-        up.addFrame(runningSS.getSprite(8, 8), 110);
+        thrustUp.addFrame(runningSS.getSprite(6, 4), 200);
 
-        down = new Animation();
+        thrustUp.addFrame(runningSS.getSprite(7, 4), 200);
 
-        down.setAutoUpdate(true);
+       
 
-        down.addFrame(runningSS.getSprite(0, 10), 330);
+        thrustDown = new Animation();
 
-        down.addFrame(runningSS.getSprite(1, 10), 330);
+        thrustDown.setAutoUpdate(false);
 
-        down.addFrame(runningSS.getSprite(2, 10), 330);
+        thrustDown.addFrame(runningSS.getSprite(0, 6), 200);
+        thrustDown.addFrame(runningSS.getSprite(1, 6), 200);
 
-        down.addFrame(runningSS.getSprite(3, 10), 330);
+        thrustDown.addFrame(runningSS.getSprite(2, 6), 200);
 
-        down.addFrame(runningSS.getSprite(4, 10), 330);
+        thrustDown.addFrame(runningSS.getSprite(3, 6), 200);
 
-        down.addFrame(runningSS.getSprite(5, 10), 330);
+        thrustDown.addFrame(runningSS.getSprite(4, 6), 200);
 
-        down.addFrame(runningSS.getSprite(6, 10), 330);
+        thrustDown.addFrame(runningSS.getSprite(5, 6), 200);
 
-        down.addFrame(runningSS.getSprite(7, 10), 330);
+        thrustDown.addFrame(runningSS.getSprite(6, 6), 200);
 
-        down.addFrame(runningSS.getSprite(8, 10), 330);
+        thrustDown.addFrame(runningSS.getSprite(7, 6), 200);
 
-        left = new Animation();
-
-        left.setAutoUpdate(true);
-
-        left.addFrame(runningSS.getSprite(0, 9), 330);
-
-        left.addFrame(runningSS.getSprite(1, 9), 330);
-
-        left.addFrame(runningSS.getSprite(2, 9), 330);
-
-        left.addFrame(runningSS.getSprite(3, 9), 330);
-
-        left.addFrame(runningSS.getSprite(4, 9), 330);
-
-        left.addFrame(runningSS.getSprite(5, 9), 330);
-
-        left.addFrame(runningSS.getSprite(6, 9), 330);
-
-        left.addFrame(runningSS.getSprite(7, 9), 330);
-
-        left.addFrame(runningSS.getSprite(8, 9), 330);
-
-        right = new Animation();
-
-        right.setAutoUpdate(true);
-
-        right.addFrame(runningSS.getSprite(0, 11), 330);
-
-        right.addFrame(runningSS.getSprite(1, 11), 330);
-
-        right.addFrame(runningSS.getSprite(2, 11), 330);
-
-        right.addFrame(runningSS.getSprite(3, 11), 330);
-
-        right.addFrame(runningSS.getSprite(4, 11), 330);
-
-        right.addFrame(runningSS.getSprite(5, 11), 330);
-
-        right.addFrame(runningSS.getSprite(6, 11), 330);
-
-        right.addFrame(runningSS.getSprite(7, 11), 330);
-
-        right.addFrame(runningSS.getSprite(8, 11), 330);
+     
 
         wait = new Animation();
 
@@ -233,7 +324,7 @@ public class Unwavering extends BasicGameState {
 
         // wait.addFrame(runningSS.getSprite(2, 14), 733);
         // wait.addFrame(runningSS.getSprite(5, 14), 333);
-        sprite = wait;
+        sprite = walkDown;
 
         // *****************************************************************
         // Obstacles etc.
@@ -280,18 +371,17 @@ public class Unwavering extends BasicGameState {
         System.out.println("Array length" + Blocked.blocked[0].length);
 
         // A remarkably similar process for finding hostiles
-        hostiles = new boolean[grassMap.getWidth()][grassMap.getHeight()];
-
+        //hostiles = new boolean[grassMap.getWidth()][grassMap.getHeight()];
         for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
             for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
                 int xBlock = (int) xAxis;
                 int yBlock = (int) yAxis;
                 if (!Blocked.blocked[xBlock][yBlock]) {
                     if (yBlock % 7 == 0 && xBlock % 15 == 0) {
-                        Item i = new Item(xAxis * SIZE, yAxis * SIZE);
+                        Item i = new Item(xAxis * tileSize, yAxis * tileSize);
                         stuff.add(i);
                         //stuff1.add(h);
-                        hostiles[xAxis][yAxis] = true;
+                        //   hostiles[xAxis][yAxis] = true;
                     }
                 }
             }
@@ -303,46 +393,40 @@ public class Unwavering extends BasicGameState {
                 int yBlock = (int) yAxis;
                 if (!Blocked.blocked[xBlock][yBlock]) {
                     if (xBlock % 9 == 0 && yBlock % 25 == 0) {
-                        Item1 h = new Item1(xAxis * SIZE, yAxis * SIZE);
+                        Item1 h = new Item1(xAxis * tileSize, yAxis * tileSize);
                         //	stuff.add(i);
                         stuff1.add(h);
-                        hostiles[xAxis][yAxis] = true;
+                        //hostiles[xAxis][yAxis] = true;
                     }
                 }
             }
         }
-        
-        
 
         //ninja = new Ninja(200, 200);
-        
-        healthpotion = new Item(100, 100);
-        healthpotion1 = new Item(450, 400);
-        stuff.add(healthpotion);
-        stuff.add(healthpotion1);
-
+//        
+//        healthpotion = new Item(100, 100);
+//        healthpotion1 = new Item(450, 400);
+//        stuff.add(healthpotion);
+//        stuff.add(healthpotion1);
         smallprize = new Treasure(450, 250);
         grandprize = new Treasure(200, 250);
-        
+
         treasures.add(smallprize);
         treasures.add(grandprize);
-        
-        
-        indian1= new Enemy(450, 100);
+
+        // indian1= new Enemy(450, 100);
         //indian2= new Enemy(550, 100);
-       // indian3= new Enemy(650, 100);
-        
-        enemies.add(indian1);
+        // indian3= new Enemy(650, 100);
+        //enemies.add(indian1);
         //enemies.add(indian2);
         //enemies.add(indian3);
-        
-        speedpotion = new Item1(100, 150);
-        speedpotion1 = new Item1(450, 100);
-        stuff1.add(speedpotion);
-        stuff1.add(speedpotion1);
-
-        antidote = new ItemWin(3004, 92);
-        stuffwin.add(antidote);
+//        speedpotion = new Item1(100, 150);
+//        speedpotion1 = new Item1(450, 100);
+//        stuff1.add(speedpotion);
+//        stuff1.add(speedpotion1);
+//
+//        antidote = new ItemWin(3004, 92);
+//        stuffwin.add(antidote);
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
@@ -378,23 +462,19 @@ public class Unwavering extends BasicGameState {
 //            //g.draw(i.hitbox);
 //
 //        }
-
         //moveenemies();
-
         drawenemies();
-
 
         for (Enemy e : enemies) {
 
             g.drawString("" + e.getID(), e.Bx, e.By);
 
-            g.drawString("" + e.health, e.Bx, e.By + SIZE / 2);
+            g.drawString("" + e.health, e.Bx, e.By + tileSize / 2);
 
             g.draw(e.rect);
 
         }
 
-        
         for (Treasure b : treasures) {
             if (b.isvisible) {
                 b.currentImage.draw(b.x, b.y);
@@ -403,7 +483,7 @@ public class Unwavering extends BasicGameState {
 
             }
         }
-        
+
         for (Item i : stuff) {
             if (i.isvisible) {
                 i.currentImage.draw(i.x, i.y);
@@ -433,8 +513,7 @@ public class Unwavering extends BasicGameState {
 
     }
 
-       public void update(GameContainer gc, StateBasedGame sbg, int delta)
-
+    public void update(GameContainer gc, StateBasedGame sbg, int delta)
             throws SlickException {
 
         Input input = gc.getInput();
@@ -443,96 +522,115 @@ public class Unwavering extends BasicGameState {
 
         Player.setpdelta(fdelta);
 
-        double rightlimit = (grassMap.getWidth() * SIZE) - (SIZE * 0.75);
+        double rightlimit = (grassMap.getWidth() * tileSize) - (tileSize * 0.75);
 
         //System.out.println("Right limit: " + rightlimit);
-
-        float projectedright = Player.x + fdelta + SIZE;
+        float projectedright = Player.x + fdelta + tileSize;
 
         boolean cangoright = projectedright < rightlimit;
 
-
         //there are two types of fixes. A kludge and a hack. This is a kludge.
-
-        if (input.isKeyDown(Input.KEY_UP)) {
-
-            sprite = up;
-
-            float fdsc = (float) (fdelta - (SIZE * .15));
-
-
-            if (!(isBlocked(Player.x, Player.y - fdelta) || isBlocked((float) (Player.x + SIZE + 1.5), Player.y - fdelta))) {
-
-                sprite.update(delta);
-
-                // The lower the delta the slower the sprite will animate.
-
-
-                Player.y -= 4;
-
-                moveenemies();
-
-            }
-
-        } else if (input.isKeyDown(Input.KEY_DOWN)) {
-
-            sprite = down;
-
-
-            if (!isBlocked(Player.x, Player.y + SIZE + fdelta)
-
-                    || !isBlocked(Player.x + SIZE - 1, Player.y + SIZE + fdelta)) {
-
-                sprite.update(delta);
-
-                Player.y += 4;
-
-                moveenemies();
-
-            }
-
-        } else if (input.isKeyDown(Input.KEY_LEFT)) {
-
-            sprite = left;
-
-
-            if (!(isBlocked(Player.x - fdelta, Player.y) || isBlocked(Player.x
-
-                    - fdelta, Player.y + SIZE - 1))) {
-
-                sprite.update(delta);
-
-                Player.x -= 4;
-
-                moveenemies();
-
-            }
-
-        } else if (input.isKeyDown(Input.KEY_RIGHT)) {
-
-            sprite = right;
-
-
-            //the boolean-kludge-implementation
-
-            if (cangoright && (!(isBlocked(Player.x + SIZE + fdelta,
-
-                    Player.y) || isBlocked(Player.x + SIZE + fdelta, Player.y + SIZE - 1)))) {
-
-                sprite.update(delta);
-
-                Player.x += 4;
-
-                moveenemies();
-
-            } //else { System.out.println("Right limit reached: " + rightlimit);}
-
+        if(attackCounter == 0){
+            attacking = false;
         }
+        if (!(currentsteps > 0) && input.isKeyDown(Input.KEY_Z)) {
+                attacking = true;
+                attackCounter = 8;
+                if (direction == "up") {
+                    sprite = thrustUp;
+                } else if (direction == "down") {
+                    sprite = thrustDown;
+                } else if (direction == "left") {
+                    sprite = thrustLeft;
+                } else if (direction == "right") {
+                    sprite = thrustRight;
+                }
+            }
+        if (!(currentsteps > 0) && !attacking) {
 
+            
 
+            if (input.isKeyDown(Input.KEY_UP)) {
+
+                if (direction != "up") {
+                    sprite = faceUp;
+                    direction = "up";
+                    currentsteps = 0;
+                } else {
+                    if (currentsteps == 0 && (!isBlocked(Player.x, Player.y - tileSize))) {
+                        currentsteps = tileSize / Player.speed;
+                        sprite = walkUp;
+                    }
+
+                }
+            } else if (input.isKeyDown(Input.KEY_DOWN)) {
+
+                if (direction != "down") {
+                    sprite = faceDown;
+                    direction = "down";
+                    currentsteps = 0;
+                } else {
+                    if (currentsteps == 0 && (!isBlocked(Player.x, Player.y + tileSize))) {
+                        currentsteps = tileSize / Player.speed;
+                        sprite = walkDown;
+                    }
+
+                }
+
+            } else if (input.isKeyDown(Input.KEY_LEFT)) {
+
+                if (direction != "left") {
+                    sprite = faceLeft;
+                    direction = "left";
+                    currentsteps = 0;
+                } else {
+                    if (currentsteps == 0 && (!isBlocked(Player.x - tileSize, Player.y))) {
+                        currentsteps = tileSize / Player.speed;
+                        sprite = walkLeft;
+                    }
+
+                }
+
+            } else if (input.isKeyDown(Input.KEY_RIGHT)) {
+
+                if (direction != "right") {
+                    sprite = faceRight;
+                    direction = "right";
+                    currentsteps = 0;
+                } else {
+                    if (currentsteps == 0 && (!isBlocked(Player.x + tileSize, Player.y))) {
+                        currentsteps = tileSize / Player.speed;
+                        sprite = walkRight;
+                    }
+
+                }
+            }
+        } else {
+            sprite.update(delta);
+            if(attackCounter > 0){
+                attackCounter --;
+            }
+            
+            if (!attacking) {
+                currentsteps -= 1;
+                if (direction == "up") {
+
+                    Player.y -= Player.speed;
+
+                } else if (direction == "down") {
+                    Player.y += Player.speed;
+                } else if (direction == "left") {
+                    Player.x -= Player.speed;
+                } else if (direction == "right") {
+                    Player.x += Player.speed;
+                }
+
+            }
+            moveenemies();
+        }
         Player.rect.setLocation(Player.getplayershitboxX(), Player.getplayershitboxY());
 
-for (Treasure i : treasures) {
+        for (Treasure i : treasures) {
 
             if (Player.rect.intersects(i.hitbox)) {
                 //System.out.println("yay");
@@ -584,15 +682,12 @@ for (Treasure i : treasures) {
 
             }
         }
-        
-        
-        
+
         for (Enemy e : enemies) {
 
             e.rect.setLocation(e.getskhitboxX(), e.getskhitboxY());
 
         }
-
 
         for (Enemy e : enemies) {
 
@@ -604,7 +699,9 @@ for (Treasure i : treasures) {
 
         }
 
-        for (int en1 = 0; en1 < Enemy.getNumberOfEnemies(); en1++) {
+        for (int en1 = 0;
+                en1 < Enemy.getNumberOfEnemies();
+                en1++) {
 
             for (int en2 = 0; en2 < Enemy.getNumberOfEnemies(); en2++) {
 
@@ -624,23 +721,23 @@ for (Treasure i : treasures) {
 
                 }
 
-
             }
 
         }
-Player.health -= counter/1000;
-		if(Player.health <= 0){
-			makevisible();
-			sbg.enterState(2, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-		}
-                if(Player.gold >= 200){
-			makevisible();
-                        Player.gold = 0;
-			sbg.enterState(3, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-		}
+        Player.health -= counter / 1000;
+        if (Player.health
+                <= 0) {
+            makevisible();
+            sbg.enterState(2, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+        }
+        if (Player.gold
+                >= 200) {
+            makevisible();
+            Player.gold = 0;
+            sbg.enterState(3, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+        }
 
     }
-
 
     public int getID() {
 
@@ -662,29 +759,25 @@ Player.health -= counter/1000;
 
     private boolean isBlocked(float tx, float ty) {
 
-        int xBlock = (int) tx / SIZE;
+        int xBlock = (int) tx / tileSize;
 
-        int yBlock = (int) ty / SIZE;
+        int yBlock = (int) ty / tileSize;
 
         return Blocked.blocked[xBlock][yBlock];
 
         // this could make a better kludge
     }
 
-    
     private void moveenemies() throws SlickException {
 
         for (Enemy e : enemies) {
 
             //  e.setdirection();
-
             e.move();
 
         }
 
-
     }
-
 
     private void drawenemies() throws SlickException {
 
@@ -693,20 +786,17 @@ Player.health -= counter/1000;
             for (Enemy e : enemies) {
 
                 //System.out.println("The current selection is: " +e.currentanime);
-
                 e.currentanime.draw(e.Bx, e.By);
-
 
             }
 
         } catch (IndexOutOfBoundsException e) {
 
             System.err.println("IndexOutOfBoundsException: "
-
                     + e.getMessage());
 
         }
 
     }
-    
+
 }

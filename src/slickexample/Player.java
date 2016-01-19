@@ -15,21 +15,21 @@ import org.newdawn.slick.geom.Shape;
  */
 public class Player {
     
-	public static float x = 96f;
+	public static float x = 64f;
 
-	public static float y = 228f;
+	public static float y = 64f;
 
 	public static int health = 100000;
         
         public static int gold = 0;
 	
-	public static float speed = .4f;
+	public static int speed = 2;
 
-	static float hitboxX = x + 8f;
+	static float hitboxX = x;
 
-	static float hitboxY = y + 8f;
+	static float hitboxY = y;
 
-	private static int startX, startY, width = 30, height = 42;
+	private static int startX, startY, width = 64, height = 64;
 
 	public static Shape rect = new Rectangle(getplayershitboxX(),
 			getplayershitboxY(), width, height);
@@ -64,14 +64,13 @@ public class Player {
 
 	public static float getplayershitboxX() {
 
-		return x + 18f;
+		return x;
 
 	}
 
 	public static float getplayershitboxY() {
 
-		return y + 18f;
-
+		return y;
 	}
 
 	public static void setplayershitboxX() {

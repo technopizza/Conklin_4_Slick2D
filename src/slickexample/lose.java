@@ -147,11 +147,11 @@ public class lose extends BasicGameState {
             case Input.KEY_1:
 
                 Player.health  = 100000;
-                Player.speed = .4f;
+                Player.speed = 2;
                 Unwavering.counter = 0;
                 ItemWin.isvisible = true;
-                Player.x = 96f;
-                Player.y = 228f;
+                Player.x = 64;
+                Player.y = 64;
                 //redo potions and reset cordinates of player
                 game.enterState(1, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 
