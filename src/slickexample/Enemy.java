@@ -26,7 +26,8 @@ public class Enemy {
     int SIZE = 64;
 
     //static int crewsize;
-
+ boolean isMove;
+    
     float Bx;
 
     float By;
@@ -73,9 +74,9 @@ public class Enemy {
 
     private int startX, startY, width = 64, height = 64;
 
-    float hitboxX = this.Bx + 8f;
+    float hitboxX = this.Bx;
 
-    float hitboxY = this.By + 8f;
+    float hitboxY = this.By;
 
     String direction = "down";
     
@@ -341,7 +342,7 @@ shootLeft = new Animation();
     }
 
 
-    Enemy(int a, int b, String dir) throws SlickException {
+    Enemy(int a, int b, String dir,boolean canMove) throws SlickException {
 
 
         Bx = a;
@@ -354,13 +355,13 @@ shootLeft = new Animation();
 
         rect = new Rectangle(hitboxX, hitboxY, width, height);
 
-        
+        direction = dir;
 
         int BHealth;
 
         boolean isBAlive = true;
 
-        canmove = true;
+        canmove = canMove;
 
         currentanime = skwait;
 
@@ -441,23 +442,23 @@ shootDown = new Animation();
 
         shootDown.setAutoUpdate(true);
 
-        shootDown.addFrame(skeletonSS.getSprite(0, 18), 330);
+        shootDown.addFrame(skeletonSS.getSprite(0, 18), 200);
 
-        shootDown.addFrame(skeletonSS.getSprite(1, 18), 330);
+        shootDown.addFrame(skeletonSS.getSprite(1, 18), 200);
 
-        shootDown.addFrame(skeletonSS.getSprite(2, 18), 330);
+        shootDown.addFrame(skeletonSS.getSprite(2, 18), 200);
 
-        shootDown.addFrame(skeletonSS.getSprite(3, 18), 330);
+        shootDown.addFrame(skeletonSS.getSprite(3, 18), 200);
 
-        shootDown.addFrame(skeletonSS.getSprite(4, 18), 330);
+        shootDown.addFrame(skeletonSS.getSprite(4, 18), 200);
 
-        shootDown.addFrame(skeletonSS.getSprite(5, 18), 330);
+        shootDown.addFrame(skeletonSS.getSprite(5, 18), 200);
 
-        shootDown.addFrame(skeletonSS.getSprite(6, 18), 330);
+        shootDown.addFrame(skeletonSS.getSprite(6, 18), 200);
 
-        shootDown.addFrame(skeletonSS.getSprite(7, 18), 330);
+        shootDown.addFrame(skeletonSS.getSprite(7, 18), 200);
 
-        shootDown.addFrame(skeletonSS.getSprite(8, 18), 330);
+        shootDown.addFrame(skeletonSS.getSprite(8, 18), 200);
         
         
         skleft = new Animation();
@@ -789,13 +790,30 @@ shootLeft = new Animation();
 
     }
 
+    
+    void configBow(){
+        if(this.direction == "up"){
+            this.currentanime = shootUp;
+        }
+        else if(this.direction == "down"){
+            this.currentanime = shootDown;
+        }
+        else if(this.direction == "left"){
+            this.currentanime = shootLeft;
+        }
+        else if(this.direction == "right"){
+            this.currentanime = shootRight;
+        }
+    }
 
+    
+    
     void move() throws SlickException {
 
         //float fdelta = 18 * 0.1f;
 
         
-
+if (this.canmove){
         if (true){
 
         if (this.Bx > Player.getplayersX()) {
@@ -853,9 +871,11 @@ shootLeft = new Animation();
     } else {this.currentanime = skdead;}
 
     }
-
+}
     
 
+    
+    
     public float getskX() {
 
         return this.Bx;

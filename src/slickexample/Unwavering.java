@@ -54,7 +54,7 @@ public class Unwavering extends BasicGameState {
 //    public Item1 speedpotion, speedpotion1;
 //    public ItemWin antidote;
 //    public Ninja ninja;
-    //public Enemy indian1;
+    public Enemy indianBow1;
     //public Enemy indian2;
     //public Enemy indian3;
     Treasure smallprize;
@@ -84,7 +84,8 @@ public class Unwavering extends BasicGameState {
     // Player stuff
     private Animation sprite, walkUp, walkDown, walkLeft, walkRight, faceUp, faceDown, faceLeft, faceRight,
             thrustUp, thrustDown, thrustLeft, thrustRight, wait;
-    boolean attacking = false; int attackCounter = 0;
+    boolean attacking = false;
+    int attackCounter = 0;
     String direction = "down";
     /**
      *
@@ -231,85 +232,77 @@ public class Unwavering extends BasicGameState {
 
         thrustRight.setAutoUpdate(false);
 
-        thrustRight.addFrame(runningSS.getSprite(0, 7), 200);
-        thrustRight.addFrame(runningSS.getSprite(1, 7), 200);
+        thrustRight.addFrame(runningSS.getSprite(0, 7), 150);
+        thrustRight.addFrame(runningSS.getSprite(1, 7), 150);
 
-        thrustRight.addFrame(runningSS.getSprite(2, 7), 200);
+        thrustRight.addFrame(runningSS.getSprite(2, 7), 150);
 
-        thrustRight.addFrame(runningSS.getSprite(3, 7), 200);
+        thrustRight.addFrame(runningSS.getSprite(3, 7), 150);
 
-        thrustRight.addFrame(runningSS.getSprite(4, 7), 200);
+        thrustRight.addFrame(runningSS.getSprite(4, 7), 150);
 
-        thrustRight.addFrame(runningSS.getSprite(5, 7), 200);
+        thrustRight.addFrame(runningSS.getSprite(5, 7), 150);
 
-        thrustRight.addFrame(runningSS.getSprite(6, 7), 200);
+        thrustRight.addFrame(runningSS.getSprite(6, 7), 150);
 
-        thrustRight.addFrame(runningSS.getSprite(7, 7), 200);
-
-       
+        thrustRight.addFrame(runningSS.getSprite(7, 7), 150);
 
         thrustLeft = new Animation();
 
         thrustLeft.setAutoUpdate(false);
 
-        thrustLeft.addFrame(runningSS.getSprite(0, 5), 200);
-        thrustLeft.addFrame(runningSS.getSprite(1, 5), 200);
+        thrustLeft.addFrame(runningSS.getSprite(0, 5), 150);
+        thrustLeft.addFrame(runningSS.getSprite(1, 5), 150);
 
-        thrustLeft.addFrame(runningSS.getSprite(2, 5), 200);
+        thrustLeft.addFrame(runningSS.getSprite(2, 5), 150);
 
-        thrustLeft.addFrame(runningSS.getSprite(3, 5), 200);
+        thrustLeft.addFrame(runningSS.getSprite(3, 5), 150);
 
-        thrustLeft.addFrame(runningSS.getSprite(4, 5), 200);
+        thrustLeft.addFrame(runningSS.getSprite(4, 5), 150);
 
-        thrustLeft.addFrame(runningSS.getSprite(5, 5), 200);
+        thrustLeft.addFrame(runningSS.getSprite(5, 5), 150);
 
-        thrustLeft.addFrame(runningSS.getSprite(6, 5), 200);
+        thrustLeft.addFrame(runningSS.getSprite(6, 5), 150);
 
-        thrustLeft.addFrame(runningSS.getSprite(7, 5), 200);
-
-        
+        thrustLeft.addFrame(runningSS.getSprite(7, 5), 150);
 
         thrustUp = new Animation();
 
         thrustUp.setAutoUpdate(false);
 
-        thrustUp.addFrame(runningSS.getSprite(0, 4), 200);
-        thrustUp.addFrame(runningSS.getSprite(1, 4), 200);
+        thrustUp.addFrame(runningSS.getSprite(0, 4), 150);
+        thrustUp.addFrame(runningSS.getSprite(1, 4), 150);
 
-        thrustUp.addFrame(runningSS.getSprite(2, 4), 200);
+        thrustUp.addFrame(runningSS.getSprite(2, 4), 150);
 
-        thrustUp.addFrame(runningSS.getSprite(3, 4), 200);
+        thrustUp.addFrame(runningSS.getSprite(3, 4), 150);
 
-        thrustUp.addFrame(runningSS.getSprite(4, 4), 200);
+        thrustUp.addFrame(runningSS.getSprite(4, 4), 150);
 
-        thrustUp.addFrame(runningSS.getSprite(5, 4), 200);
+        thrustUp.addFrame(runningSS.getSprite(5, 4), 150);
 
-        thrustUp.addFrame(runningSS.getSprite(6, 4), 200);
+        thrustUp.addFrame(runningSS.getSprite(6, 4), 150);
 
-        thrustUp.addFrame(runningSS.getSprite(7, 4), 200);
-
-       
+        thrustUp.addFrame(runningSS.getSprite(7, 4), 150);
 
         thrustDown = new Animation();
 
         thrustDown.setAutoUpdate(false);
 
-        thrustDown.addFrame(runningSS.getSprite(0, 6), 200);
-        thrustDown.addFrame(runningSS.getSprite(1, 6), 200);
+        thrustDown.addFrame(runningSS.getSprite(0, 6), 150);
+        thrustDown.addFrame(runningSS.getSprite(1, 6), 150);
 
-        thrustDown.addFrame(runningSS.getSprite(2, 6), 200);
+        thrustDown.addFrame(runningSS.getSprite(2, 6), 150);
 
-        thrustDown.addFrame(runningSS.getSprite(3, 6), 200);
+        thrustDown.addFrame(runningSS.getSprite(3, 6), 150);
 
-        thrustDown.addFrame(runningSS.getSprite(4, 6), 200);
+        thrustDown.addFrame(runningSS.getSprite(4, 6), 150);
 
-        thrustDown.addFrame(runningSS.getSprite(5, 6), 200);
+        thrustDown.addFrame(runningSS.getSprite(5, 6), 150);
 
-        thrustDown.addFrame(runningSS.getSprite(6, 6), 200);
+        thrustDown.addFrame(runningSS.getSprite(6, 6), 150);
 
-        thrustDown.addFrame(runningSS.getSprite(7, 6), 200);
-
-     
+        thrustDown.addFrame(runningSS.getSprite(7, 6), 150);
 
         wait = new Animation();
 
@@ -415,10 +408,11 @@ public class Unwavering extends BasicGameState {
         treasures.add(smallprize);
         treasures.add(grandprize);
 
-       // indian1= new Enemy(448, 64, "down");
-       // indian2= new Enemy(576, 192);
+        indianBow1= new Enemy(448, 64, "down", false);
+        // indian2= new Enemy(576, 192);
         // indian3= new Enemy(650, 100);
-        //enemies.add(indian1);
+        enemies.add(indianBow1);
+        indianBow1.configBow();
         //enemies.add(indian2);
         //enemies.add(indian3);
 //        speedpotion = new Item1(100, 150);
@@ -531,25 +525,23 @@ public class Unwavering extends BasicGameState {
         boolean cangoright = projectedright < rightlimit;
 
         //there are two types of fixes. A kludge and a hack. This is a kludge.
-        if(attackCounter == 0){
+        if (attackCounter == 0) {
             attacking = false;
         }
         if (!(currentsteps > 0) && input.isKeyDown(Input.KEY_Z)) {
-                attacking = true;
-                attackCounter = 8;
-                if (direction == "up") {
-                    sprite = thrustUp;
-                } else if (direction == "down") {
-                    sprite = thrustDown;
-                } else if (direction == "left") {
-                    sprite = thrustLeft;
-                } else if (direction == "right") {
-                    sprite = thrustRight;
-                }
+            attacking = true;
+            attackCounter = 8;
+            if (direction == "up") {
+                sprite = thrustUp;
+            } else if (direction == "down") {
+                sprite = thrustDown;
+            } else if (direction == "left") {
+                sprite = thrustLeft;
+            } else if (direction == "right") {
+                sprite = thrustRight;
             }
+        }
         if (!(currentsteps > 0) && !attacking) {
-
-            
 
             if (input.isKeyDown(Input.KEY_UP)) {
 
@@ -608,10 +600,10 @@ public class Unwavering extends BasicGameState {
             }
         } else {
             sprite.update(delta);
-            if(attackCounter > 0){
-                attackCounter --;
+            if (attackCounter > 0) {
+                attackCounter--;
             }
-            
+
             if (!attacking) {
                 currentsteps -= 1;
                 if (direction == "up") {
