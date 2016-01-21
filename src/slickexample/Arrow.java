@@ -10,22 +10,73 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
+
 /**
  *
  * @author jconklin2391
  */
 public class Arrow {
-     public int x;
-	public int y;
+     public float x;
+	public float y;
 	public boolean isvisible = true;
 	Image currentImage;
 	Shape hitbox;
 	Image arrowImage = new Image("res/arrow.png");
+        String direction;
+        static int speed = 8;
+        private int startX, startY, width = 22, height = 64;
 
-	Arrow(int a, int b) throws SlickException {
+    float hitboxX = x+22;
+
+    float hitboxY = this.y;
+
+    
+    
+    public Shape rect;
+
+	Arrow(float a, float b, String dir) throws SlickException {
 		this.x = a;
 		this.y = b;
-		this.hitbox = new Rectangle(a, b, 64, 64);// 64 is the width of the item
+                this.direction=dir;
+		this.hitbox = new Rectangle(a, b, width, height);// 64 is the width of the item
 		this.currentImage = arrowImage;
+                
+                
 }
+        public  float getX() {
+
+		return this.x;
+
+	}
+
+	public  float getY() {
+
+		return y;
+
+	}
+
+	public  float gethitboxX() {
+
+		return x + 22;
+
+	}
+
+	public  float gethitboxY() {
+
+		return y;
+	}
+
+	public  void sethitboxX() {
+
+		hitboxX = gethitboxX();
+
+	}
+
+	public  void setplayershitboxY() {
+
+		hitboxY = gethitboxY();
+
+	}
+        
+        
 }

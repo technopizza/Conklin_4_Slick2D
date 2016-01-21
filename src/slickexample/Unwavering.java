@@ -64,6 +64,8 @@ public class Unwavering extends BasicGameState {
 
     public ArrayList<Enemy> enemies = new ArrayList();
     public ArrayList<Enemy> enemiesBow = new ArrayList();
+    
+    public ArrayList<Arrow> arrows = new ArrayList();
 
     public ArrayList<Item> stuff = new ArrayList();
 
@@ -447,7 +449,7 @@ public class Unwavering extends BasicGameState {
         g.drawString("treasure: " + (int) (Player.gold), camera.cameraX + 10,
                 camera.cameraY + 40);
 
-        g.draw(Player.rect);
+        //g.draw(Player.rect);
         g.drawString("time passed: " + counter / 1000, camera.cameraX + 600, camera.cameraY);
         // moveenemies();
 
@@ -460,15 +462,17 @@ public class Unwavering extends BasicGameState {
         //moveenemies();
         drawenemies();
 
-        for (Enemy e : enemies) {
-
-            g.drawString("" + e.getID(), e.Bx, e.By);
-
-            g.drawString("" + e.health, e.Bx, e.By + tileSize / 2);
-
-            g.draw(e.rect);
-
-        }
+//        for (Enemy e : enemies) {
+//
+//            g.drawString("" + e.getID(), e.Bx, e.By);
+//
+//            g.drawString("" + e.health, e.Bx, e.By + tileSize / 2);
+//
+//            //g.draw(e.rect);
+//
+//        }
+        
+        
 
         for (Treasure b : treasures) {
             if (b.isvisible) {
@@ -523,7 +527,20 @@ public class Unwavering extends BasicGameState {
         float projectedright = Player.x + fdelta + tileSize;
 
         boolean cangoright = projectedright < rightlimit;
-
+for (Arrow a : arrows) {
+            if(a.direction == "up"){
+                a.y -= Arrow.speed;
+            }
+            else if(a.direction == "down"){
+                a.y += Arrow.speed;
+            }
+            else if(a.direction == "right"){
+                a.x += Arrow.speed;
+            }
+            else if(a.direction == "left"){
+                a.x -= Arrow.speed;
+            }
+        }
         //there are two types of fixes. A kludge and a hack. This is a kludge.
         if (attackCounter == 0) {
             attacking = false;
@@ -603,7 +620,12 @@ public class Unwavering extends BasicGameState {
             if (attackCounter > 0) {
                 attackCounter--;
             }
+            for (Enemy e : enemies) {
 
+            arrows.add(new Arrow(e.getskX() + 22, e.getskY(), e.direction));
+
+        }
+            
             if (!attacking) {
                 currentsteps -= 1;
                 if (direction == "up") {
@@ -635,6 +657,20 @@ public class Unwavering extends BasicGameState {
 
             }
         }
+        
+        for (Arrow a : arrows) {
+
+            if (Player.rect.intersects(a.hitbox)) {
+                //System.out.println("yay");
+                if (a.isvisible) {
+
+                    Player.health -= 20;
+                    a.isvisible = false;
+                }
+
+            }
+        }
+        
 
         for (Item i : stuff) {
 
@@ -681,6 +717,12 @@ public class Unwavering extends BasicGameState {
             e.rect.setLocation(e.getskhitboxX(), e.getskhitboxY());
 
         }
+        if(!arrows.isEmpty()){ 
+        for (Arrow a : arrows) {
+
+            a.rect.setLocation(a.gethitboxX(), a.gethitboxY());
+
+        }}
 
         for (Enemy e : enemies) {
 

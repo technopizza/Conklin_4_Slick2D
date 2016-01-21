@@ -72,7 +72,7 @@ public class Enemy {
 
     private boolean icangoright;
 
-    private int startX, startY, width = 64, height = 64;
+    private int startX, startY, width = 62, height = 62;
 
     float hitboxX = this.Bx;
 
@@ -892,14 +892,14 @@ if (this.canmove){
 
     public float getskhitboxX() {
 
-        return this.Bx;
+        return this.Bx +1;
 
     }
 
 
     public float getskhitboxY() {
 
-        return this.By;
+        return this.By +1;
 
     }
 

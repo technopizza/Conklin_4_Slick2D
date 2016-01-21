@@ -29,7 +29,7 @@ public class Player {
 
 	static float hitboxY = y;
 
-	private static int startX, startY, width = 64, height = 64;
+	private static int startX, startY, width = 62, height = 62;
 
 	public static Shape rect = new Rectangle(getplayershitboxX(),
 			getplayershitboxY(), width, height);
@@ -64,13 +64,13 @@ public class Player {
 
 	public static float getplayershitboxX() {
 
-		return x;
+		return x +1;
 
 	}
 
 	public static float getplayershitboxY() {
 
-		return y;
+		return y + 1;
 	}
 
 	public static void setplayershitboxX() {
