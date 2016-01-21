@@ -718,9 +718,18 @@ for (Arrow a : arrows) {
 
         }
         if(!arrows.isEmpty()){ 
+            System.out.println("check arrows");
+            
         for (Arrow a : arrows) {
-
-            a.rect.setLocation(a.gethitboxX(), a.gethitboxY());
+            System.out.println(a.x + " , " + a.y);
+            
+            
+            try {
+               //  a.rect.setLocation(a.gethitboxX(), a.gethitboxY());
+            }
+           catch (IndexOutOfBoundsException e ){
+               System.out.println("oops");
+           }
 
         }}
 
