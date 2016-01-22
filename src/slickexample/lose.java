@@ -93,7 +93,7 @@ public class lose extends BasicGameState {
 
 
         //g.drawString("You LOSE!", 450, 200);
-        g.drawString("press 1 to try again", 400, 320);
+        //g.drawString("press 1 to try again", 400, 320);
 
 
        
@@ -146,14 +146,14 @@ public class lose extends BasicGameState {
 
             case Input.KEY_1:
 
-                Player.health  = 100000;
-                Player.speed = 2;
-                Unwavering.counter = 0;
-                ItemWin.isvisible = true;
-                Player.x = 64;
-                Player.y = 64;
-                //redo potions and reset cordinates of player
-                game.enterState(1, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+//                Player.health  = 100000;
+//                Player.speed = 2;
+//                Unwavering.counter = 0;
+//                ItemWin.isvisible = true;
+//                Player.x = 64;
+//                Player.y = 64;
+//                //redo potions and reset cordinates of player
+//                game.enterState(1, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 
 
                 break;

@@ -57,9 +57,17 @@ public class Unwavering extends BasicGameState {
     public Enemy indianBow1;
     public Enemy indianBow2;
     public Enemy indianBow3;
+    public Enemy indianBow4;
+    public Enemy indianBow5;
+    public Enemy indianBow6;
+    public Enemy indianBow7;
+    public Enemy indianBow8;
+    public Enemy indianBow9;
+    
     Treasure smallprize;
     Treasure grandprize;
-
+Treasure grandeprize;
+    
     public ArrayList<Treasure> treasures = new ArrayList();
 
     public ArrayList<Enemy> enemies = new ArrayList();
@@ -404,14 +412,23 @@ public class Unwavering extends BasicGameState {
 //        healthpotion1 = new Item(450, 400);
 //        stuff.add(healthpotion);
 //        stuff.add(healthpotion1);
-        smallprize = new Treasure(450, 250);
-        grandprize = new Treasure(200, 250);
+        smallprize = new Treasure(tileSize * 20, tileSize * 15);
+        grandprize = new Treasure(tileSize * 7, tileSize * 15);
+        grandeprize = new Treasure(tileSize * 17, tileSize * 8);
 
         treasures.add(smallprize);
         treasures.add(grandprize);
+        treasures.add(grandeprize);
 
-        indianBow1 = new Enemy(320, 512, "right", false);
-        indianBow2 = new Enemy(640, 128, "down", false);
+        indianBow1 = new Enemy(tileSize * 10, tileSize * 9, "down", false);
+        indianBow2 = new Enemy(tileSize * 10, tileSize * 2, "right", false);
+        indianBow3 = new Enemy(tileSize * 12, tileSize * 5, "down", false);
+        indianBow4 = new Enemy(tileSize * 5, tileSize * 8, "right", false);
+        indianBow5 = new Enemy(tileSize * 14, tileSize * 11, "up", false);
+        indianBow6= new Enemy(tileSize * 5, tileSize * 20, "up", false);
+        indianBow7= new Enemy(tileSize * 15, tileSize * 21, "up", false);
+        indianBow8 = new Enemy(tileSize * 20, tileSize * 20, "left", false);
+        indianBow9 = new Enemy(tileSize * 20, tileSize * 19, "up", false);
         // indian2= new Enemy(576, 192);
         // indian3= new Enemy(650, 100);
         enemies.add(indianBow1);
@@ -419,6 +436,22 @@ public class Unwavering extends BasicGameState {
         
         enemies.add(indianBow2);
         indianBow2.configBow();
+        enemies.add(indianBow3);
+        indianBow3.configBow();
+        enemies.add(indianBow4);
+        indianBow4.configBow();
+        enemies.add(indianBow5);
+        indianBow5.configBow();enemies.add(indianBow6);
+        indianBow6.configBow();enemies.add(indianBow7);
+        indianBow7.configBow();
+        enemies.add(indianBow8);
+        indianBow8.configBow();
+         enemies.add(indianBow9);
+        indianBow9.configBow();
+        
+        
+        
+        
         //enemies.add(indian2);
         //enemies.add(indian3);
 //        speedpotion = new Item1(100, 150);
@@ -448,13 +481,13 @@ public class Unwavering extends BasicGameState {
         g.drawString("Health: " + Player.health / 1000, camera.cameraX + 10,
                 camera.cameraY + 10);
 
-        g.drawString("speed: " + (int) (Player.speed * 10), camera.cameraX + 10,
-                camera.cameraY + 25);
+        //g.drawString("speed: " + (int) (Player.speed * 10), camera.cameraX + 10,
+           //     camera.cameraY + 25);
         g.drawString("treasure: " + (int) (Player.gold), camera.cameraX + 10,
                 camera.cameraY + 40);
 
         //g.draw(Player.rect);
-        g.drawString("time passed: " + counter / 1000, camera.cameraX + 600, camera.cameraY);
+    //    g.drawString("time passed: " + counter / 1000, camera.cameraX + 600, camera.cameraY);
         // moveenemies();
 
 //        if (ninja.isvisible) {
@@ -479,7 +512,7 @@ public class Unwavering extends BasicGameState {
             if (a.isvisible) {
                 a.currentImage.draw(a.x, a.y);
                 // draw the hitbox
-                g.draw(a.hitbox);
+                //g.draw(a.hitbox);
 
             }
         }
@@ -693,45 +726,45 @@ public class Unwavering extends BasicGameState {
            // }
         }
 
-        for (Item i : stuff) {
-
-            if (Player.rect.intersects(i.hitbox)) {
-                //System.out.println("yay");
-                if (i.isvisible) {
-
-                    Player.health += 10000;
-                    i.isvisible = false;
-                }
-
-            }
-        }
-
-        for (Item1 h : stuff1) {
-
-            if (Player.rect.intersects(h.hitbox)) {
-                //System.out.println("yay");
-                if (h.isvisible) {
-
-                    Player.speed += 0.2f;
-                    h.isvisible = false;
-                }
-
-            }
-        }
-
-        for (ItemWin w : stuffwin) {
-
-            if (Player.rect.intersects(w.hitbox)) {
-                //System.out.println("yay");
-                if (w.isvisible) {
-                    w.isvisible = false;
-                    makevisible();
-                    sbg.enterState(3, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-
-                }
-
-            }
-        }
+//        for (Item i : stuff) {
+//
+//            if (Player.rect.intersects(i.hitbox)) {
+//                //System.out.println("yay");
+//                if (i.isvisible) {
+//
+//                    Player.health += 10000;
+//                    i.isvisible = false;
+//                }
+//
+//            }
+//        }
+//
+//        for (Item1 h : stuff1) {
+//
+//            if (Player.rect.intersects(h.hitbox)) {
+//                //System.out.println("yay");
+//                if (h.isvisible) {
+//
+//                    Player.speed += 0.2f;
+//                    h.isvisible = false;
+//                }
+//
+//            }
+//        }
+//
+//        for (ItemWin w : stuffwin) {
+//
+//            if (Player.rect.intersects(w.hitbox)) {
+//                //System.out.println("yay");
+//                if (w.isvisible) {
+//                    w.isvisible = false;
+//                    makevisible();
+//                    sbg.enterState(3, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+//
+//                }
+//
+//            }
+//        }
 
         for (Enemy e : enemies) {
 
@@ -793,7 +826,7 @@ public class Unwavering extends BasicGameState {
             sbg.enterState(2, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
         }
         if (Player.gold
-                >= 200) {
+                >= 400) {
             makevisible();
             Player.gold = 0;
             sbg.enterState(3, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
