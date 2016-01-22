@@ -20,7 +20,7 @@ public class Treasure {
 	public boolean isvisible = true;
 	Image currentImage;
 	Shape hitbox;
-	Image treasureImage = new Image("res/obama.png");
+	Image treasureImage = new Image("res/treasureSmall.png");
 
 	Treasure(int a, int b) throws SlickException {
 		this.x = a;

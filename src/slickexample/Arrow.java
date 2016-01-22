@@ -21,12 +21,15 @@ public class Arrow {
 	public boolean isvisible = true;
 	Image currentImage;
 	Shape hitbox;
-	Image arrowImage = new Image("res/arrow.png");
+	Image arrowImageUp = new Image("res/arrowUp.png");
+        Image arrowImageDown = new Image("res/arrowDown.png");
+        Image arrowImageLeft = new Image("res/arrowLeft.png");
+        Image arrowImageRight = new Image("res/arrowRight.png");
         String direction;
         static int speed = 8;
-        private int startX, startY, width = 22, height = 64;
+        private int startX, startY, width = 32, height = 32;
 
-    float hitboxX = x+22;
+    float hitboxX = x+32f;
 
     float hitboxY = this.y;
 
@@ -39,7 +42,7 @@ public class Arrow {
 		this.y = b;
                 this.direction=dir;
 		this.hitbox = new Rectangle(a, b, width, height);// 64 is the width of the item
-		this.currentImage = arrowImage;
+		//.currentImage = arrowImage;
                 
                 
 }
@@ -77,6 +80,21 @@ public class Arrow {
 		hitboxY = gethitboxY();
 
 	}
-        
+        public void getImage(){
+           
+            if(direction == "up"){
+                currentImage = arrowImageUp;
+            }
+            else if(direction == "down"){
+                currentImage = arrowImageDown;
+            }
+            else if(direction == "right"){
+                currentImage = arrowImageRight;
+            }
+            else if(direction == "left"){
+                currentImage = arrowImageLeft;
+            }
+          
+        }
         
 }

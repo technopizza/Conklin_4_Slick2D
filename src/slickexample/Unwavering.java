@@ -55,8 +55,8 @@ public class Unwavering extends BasicGameState {
 //    public ItemWin antidote;
 //    public Ninja ninja;
     public Enemy indianBow1;
-    //public Enemy indian2;
-    //public Enemy indian3;
+    public Enemy indianBow2;
+    public Enemy indianBow3;
     Treasure smallprize;
     Treasure grandprize;
 
@@ -64,7 +64,7 @@ public class Unwavering extends BasicGameState {
 
     public ArrayList<Enemy> enemies = new ArrayList();
     public ArrayList<Enemy> enemiesBow = new ArrayList();
-    
+
     public ArrayList<Arrow> arrows = new ArrayList();
 
     public ArrayList<Item> stuff = new ArrayList();
@@ -410,11 +410,15 @@ public class Unwavering extends BasicGameState {
         treasures.add(smallprize);
         treasures.add(grandprize);
 
-        indianBow1= new Enemy(448, 64, "down", false);
+        indianBow1 = new Enemy(320, 512, "right", false);
+        indianBow2 = new Enemy(640, 128, "down", false);
         // indian2= new Enemy(576, 192);
         // indian3= new Enemy(650, 100);
         enemies.add(indianBow1);
         indianBow1.configBow();
+        
+        enemies.add(indianBow2);
+        indianBow2.configBow();
         //enemies.add(indian2);
         //enemies.add(indian3);
 //        speedpotion = new Item1(100, 150);
@@ -471,8 +475,14 @@ public class Unwavering extends BasicGameState {
 //            //g.draw(e.rect);
 //
 //        }
-        
-        
+        for (Arrow a : arrows) {
+            if (a.isvisible) {
+                a.currentImage.draw(a.x, a.y);
+                // draw the hitbox
+                g.draw(a.hitbox);
+
+            }
+        }
 
         for (Treasure b : treasures) {
             if (b.isvisible) {
@@ -527,17 +537,14 @@ public class Unwavering extends BasicGameState {
         float projectedright = Player.x + fdelta + tileSize;
 
         boolean cangoright = projectedright < rightlimit;
-for (Arrow a : arrows) {
-            if(a.direction == "up"){
+        for (Arrow a : arrows) {
+            if (a.direction == "up") {
                 a.y -= Arrow.speed;
-            }
-            else if(a.direction == "down"){
+            } else if (a.direction == "down") {
                 a.y += Arrow.speed;
-            }
-            else if(a.direction == "right"){
+            } else if (a.direction == "right") {
                 a.x += Arrow.speed;
-            }
-            else if(a.direction == "left"){
+            } else if (a.direction == "left") {
                 a.x -= Arrow.speed;
             }
         }
@@ -615,18 +622,24 @@ for (Arrow a : arrows) {
 
                 }
             }
+            if (currentsteps > 0) {
+                for (Enemy e : enemies) {
+                    Arrow thisArrow = new Arrow(e.getskX(), e.getskY(), e.direction);
+                    thisArrow.getImage();
+                    arrows.add(thisArrow);
+                    
+
+                }
+            }
+
         } else {
             sprite.update(delta);
             if (attackCounter > 0) {
                 attackCounter--;
             }
-            for (Enemy e : enemies) {
 
-            arrows.add(new Arrow(e.getskX() + 22, e.getskY(), e.direction));
-
-        }
-            
             if (!attacking) {
+
                 currentsteps -= 1;
                 if (direction == "up") {
 
@@ -642,6 +655,7 @@ for (Arrow a : arrows) {
 
             }
             moveenemies();
+
         }
         Player.rect.setLocation(Player.getplayershitboxX(), Player.getplayershitboxY());
 
@@ -657,20 +671,27 @@ for (Arrow a : arrows) {
 
             }
         }
-        
+
         for (Arrow a : arrows) {
 
-            if (Player.rect.intersects(a.hitbox)) {
-                //System.out.println("yay");
+            //if (Player.rect.intersects(a.hitbox)) {
+                //System.out.println("yay");|| a.y > grassMap.getHeight()
                 if (a.isvisible) {
-
-                    Player.health -= 20;
-                    a.isvisible = false;
+                    if((a.x > (grassMap.getWidth() * tileSize)|| a.y > (grassMap.getHeight() * tileSize)) || isBlocked(a.x, a.y)){
+                        
+                        a.isvisible = false;
+                    }
+                    else if(Player.rect.intersects(a.hitbox)){
+                        Player.health -= 10000;
+                        a.isvisible = false;
+                    }
+                    
+                    
+                    //arrows.remove(a);
                 }
 
-            }
+           // }
         }
-        
 
         for (Item i : stuff) {
 
@@ -717,21 +738,18 @@ for (Arrow a : arrows) {
             e.rect.setLocation(e.getskhitboxX(), e.getskhitboxY());
 
         }
-        if(!arrows.isEmpty()){ 
-            System.out.println("check arrows");
+        if (!arrows.isEmpty()) {
             
-        for (Arrow a : arrows) {
-            System.out.println(a.x + " , " + a.y);
-            
-            
-            try {
-               //  a.rect.setLocation(a.gethitboxX(), a.gethitboxY());
-            }
-           catch (IndexOutOfBoundsException e ){
-               System.out.println("oops");
-           }
+            for (Arrow a : arrows) {
+               
+                try {
+                      a.hitbox.setLocation(a.gethitboxX(), a.gethitboxY());
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("oops");
+                }
 
-        }}
+            }
+        }
 
         for (Enemy e : enemies) {
 
