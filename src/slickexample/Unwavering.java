@@ -129,7 +129,7 @@ Treasure grandeprize;
         grassMap = new TiledMap("res/d4.tmx");
 
         // Ongoing checks are useful
-        System.out.println("Tile map is this wide: " + grassMap.getWidth());
+       // System.out.println("Tile map is this wide: " + grassMap.getWidth());
 
         camera = new Camera(gc, grassMap);
 
@@ -342,8 +342,8 @@ Treasure grandeprize;
         // You could also use this for planning traps, etc.
         // System.out.println("Number of tile layers: "
         // +grassMap.getLayerCount());
-        System.out.println("The grassmap is " + grassMap.getWidth() + " by "
-                + grassMap.getHeight());
+//        System.out.println("The grassmap is " + grassMap.getWidth() + " by "
+//                + grassMap.getHeight());
 
         for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
 
@@ -361,8 +361,8 @@ Treasure grandeprize;
 
                 if ("true".equals(value)) {
 
-                    System.out.println("The tile at (" + xAxis + ", "
-                            + yAxis + ") is blocked.");
+                   // System.out.println("The tile at (" + xAxis + ", "
+                    //        + yAxis + ") is blocked.");
 
                     Blocked.blocked[xAxis][yAxis] = true;
 
@@ -376,20 +376,20 @@ Treasure grandeprize;
 
         // A remarkably similar process for finding hostiles
         //hostiles = new boolean[grassMap.getWidth()][grassMap.getHeight()];
-        for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
-            for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
-                int xBlock = (int) xAxis;
-                int yBlock = (int) yAxis;
-                if (!Blocked.blocked[xBlock][yBlock]) {
-                    if (yBlock % 7 == 0 && xBlock % 15 == 0) {
-                        Item i = new Item(xAxis * tileSize, yAxis * tileSize);
-                        stuff.add(i);
-                        //stuff1.add(h);
-                        //   hostiles[xAxis][yAxis] = true;
-                    }
-                }
-            }
-        }
+//        for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
+//            for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
+//                int xBlock = (int) xAxis;
+//                int yBlock = (int) yAxis;
+//                if (!Blocked.blocked[xBlock][yBlock]) {
+//                    if (yBlock % 7 == 0 && xBlock % 15 == 0) {
+//                        Item i = new Item(xAxis * tileSize, yAxis * tileSize);
+//                        stuff.add(i);
+//                        //stuff1.add(h);
+//                        //   hostiles[xAxis][yAxis] = true;
+//                    }
+//                }
+//            }
+//        }
 
         for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
             for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
