@@ -1,4 +1,4 @@
-package slickexample;
+package goldandglory;
 
 import org.newdawn.slick.state.*;
 
@@ -48,7 +48,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.tiled.TiledMap;
 import org.w3c.dom.css.Rect;
 
-public class Unwavering extends BasicGameState {
+public class GoldAndGlory extends BasicGameState {
 
 //    public Item healthpotion, healthpotion1;
 //    public Item1 speedpotion, speedpotion1;
@@ -112,7 +112,7 @@ Treasure grandeprize;
     private static int currentsteps = 0;
     private static final int SCREEN_HEIGHT = tilesY * tileSize;
 
-    public Unwavering(int xSize, int ySize) {
+    public GoldAndGlory(int xSize, int ySize) {
 
     }
 

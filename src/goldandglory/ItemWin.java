@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package slickexample;
+package goldandglory;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -14,19 +14,19 @@ import org.newdawn.slick.geom.Shape;
  *
  * @author jconklin2391
  */
-public class Ninja {
+public class ItemWin {
     public int x;
 	public int y;
-	public boolean isvisible = true;
+	public static boolean isvisible = true;
 	Image currentImage;
 	Shape hitbox;
-	Image ninjaimage = new Image(
-			"res/d22_ninja.png");
+	Image antidote = new Image("res/antidote.png");
 
-	Ninja(int a, int b) throws SlickException {
+	ItemWin (int a, int b) throws SlickException {
 		this.x = a;
 		this.y = b;
 		this.hitbox = new Rectangle(a, b, 32, 32);// 64 is the width of the item
-		this.currentImage = ninjaimage;
-}
+		this.currentImage = antidote;
+
+	}
 }

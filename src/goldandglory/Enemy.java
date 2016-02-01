@@ -1,4 +1,4 @@
-package slickexample;
+package goldandglory;
 
 
 import org.newdawn.slick.Animation;

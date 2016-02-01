@@ -1,4 +1,4 @@
-package slickexample;
+package goldandglory;
 
 
 import org.newdawn.slick.*;
@@ -11,7 +11,7 @@ public class Main extends StateBasedGame{
 
    
 
-   public static final String gamename = "Unwavering";
+   public static final String gamename = "Gold and Glory";
 
    public static final int play = 0;
 
@@ -27,7 +27,7 @@ public class Main extends StateBasedGame{
 
       this.addState(new Menu(xSize, ySize));
 
-      this.addState(new Unwavering(xSize, ySize));
+      this.addState(new GoldAndGlory(xSize, ySize));
       
       this.addState(new lose(xSize, ySize));
       

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package slickexample;
+package goldandglory;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.geom.Rectangle;
@@ -36,8 +36,11 @@ public class Player {
 
 	public static float pdelta;
 
+        
+        
 	public static Animation playeranime;
 
+        
 	public static void setpdelta(float somenum) {
 
 		pdelta = somenum;
