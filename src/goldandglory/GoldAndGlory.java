@@ -372,7 +372,7 @@ Treasure grandeprize;
 
         }
 
-        System.out.println("Array length" + Blocked.blocked[0].length);
+        //System.out.println("Array length" + Blocked.blocked[0].length);
 
         // A remarkably similar process for finding hostiles
         //hostiles = new boolean[grassMap.getWidth()][grassMap.getHeight()];
