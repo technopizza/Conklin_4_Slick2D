@@ -63,11 +63,11 @@ public class GoldAndGlory extends BasicGameState {
     public Enemy indianBow7;
     public Enemy indianBow8;
     public Enemy indianBow9;
-    
+
     Treasure smallprize;
     Treasure grandprize;
-Treasure grandeprize;
-    
+    Treasure grandeprize;
+
     public ArrayList<Treasure> treasures = new ArrayList();
 
     public ArrayList<Enemy> enemies = new ArrayList();
@@ -92,8 +92,7 @@ Treasure grandeprize;
     public static int counter = 0;
 
     // Player stuff
-    private Animation sprite, walkUp, walkDown, walkLeft, walkRight, faceUp, faceDown, faceLeft, faceRight,
-            thrustUp, thrustDown, thrustLeft, thrustRight, wait;
+    private Animation sprite;
     boolean attacking = false;
     int attackCounter = 0;
     String direction = "down";
@@ -123,227 +122,18 @@ Treasure grandeprize;
 
         gc.setShowFPS(false);
 
-        // *******************
-        // Scenerey Stuff
-        // ****************
         grassMap = new TiledMap("res/d4.tmx");
-
-        // Ongoing checks are useful
-       // System.out.println("Tile map is this wide: " + grassMap.getWidth());
 
         camera = new Camera(gc, grassMap);
 
-        // *********************************************************************************
-        // Player stuff --- these things should probably be chunked into methods
-        // and classes
-        // *********************************************************************************
-        SpriteSheet runningSS = new SpriteSheet(
-                "res/explorerSpear.png", 64, 64, 0);
+        Player.spriteInit();
 
-        // System.out.println("Horizontal count: "
-        // +runningSS.getHorizontalCount());
-        // System.out.println("Vertical count: " +runningSS.getVerticalCount());
-        faceUp = new Animation();
-        faceUp.addFrame(runningSS.getSprite(0, 8), 110);
-
-        walkUp = new Animation();
-
-        walkUp.setAutoUpdate(false);
-        walkUp.addFrame(runningSS.getSprite(0, 8), 200);
-        walkUp.addFrame(runningSS.getSprite(1, 8), 200);
-
-        walkUp.addFrame(runningSS.getSprite(2, 8), 200);
-
-        walkUp.addFrame(runningSS.getSprite(3, 8), 200);
-
-        walkUp.addFrame(runningSS.getSprite(4, 8), 200);
-
-        walkUp.addFrame(runningSS.getSprite(5, 8), 200);
-
-        walkUp.addFrame(runningSS.getSprite(6, 8), 200);
-
-        walkUp.addFrame(runningSS.getSprite(7, 8), 200);
-
-        walkUp.addFrame(runningSS.getSprite(8, 8), 200);
-
-        faceDown = new Animation();
-        faceDown.addFrame(runningSS.getSprite(0, 10), 330);
-
-        walkDown = new Animation();
-
-        walkDown.setAutoUpdate(false);
-
-        walkDown.addFrame(runningSS.getSprite(0, 10), 200);
-        walkDown.addFrame(runningSS.getSprite(1, 10), 200);
-
-        walkDown.addFrame(runningSS.getSprite(2, 10), 200);
-
-        walkDown.addFrame(runningSS.getSprite(3, 10), 200);
-
-        walkDown.addFrame(runningSS.getSprite(4, 10), 200);
-
-        walkDown.addFrame(runningSS.getSprite(5, 10), 200);
-
-        walkDown.addFrame(runningSS.getSprite(6, 10), 200);
-
-        walkDown.addFrame(runningSS.getSprite(7, 10), 200);
-
-        walkDown.addFrame(runningSS.getSprite(8, 10), 200);
-
-        faceLeft = new Animation();
-        faceLeft.addFrame(runningSS.getSprite(0, 9), 330);
-
-        walkLeft = new Animation();
-
-        walkLeft.setAutoUpdate(false);
-
-        walkLeft.addFrame(runningSS.getSprite(0, 9), 200);
-        walkLeft.addFrame(runningSS.getSprite(1, 9), 200);
-
-        walkLeft.addFrame(runningSS.getSprite(2, 9), 200);
-
-        walkLeft.addFrame(runningSS.getSprite(3, 9), 200);
-
-        walkLeft.addFrame(runningSS.getSprite(4, 9), 200);
-
-        walkLeft.addFrame(runningSS.getSprite(5, 9), 200);
-
-        walkLeft.addFrame(runningSS.getSprite(6, 9), 200);
-
-        walkLeft.addFrame(runningSS.getSprite(7, 9), 200);
-
-        walkLeft.addFrame(runningSS.getSprite(8, 9), 200);
-
-        faceRight = new Animation();
-        faceRight.addFrame(runningSS.getSprite(0, 11), 200);
-
-        walkRight = new Animation();
-
-        walkRight.setAutoUpdate(false);
-
-        walkRight.addFrame(runningSS.getSprite(0, 11), 200);
-        walkRight.addFrame(runningSS.getSprite(1, 11), 200);
-
-        walkRight.addFrame(runningSS.getSprite(2, 11), 200);
-
-        walkRight.addFrame(runningSS.getSprite(3, 11), 200);
-
-        walkRight.addFrame(runningSS.getSprite(4, 11), 200);
-
-        walkRight.addFrame(runningSS.getSprite(5, 11), 200);
-
-        walkRight.addFrame(runningSS.getSprite(6, 11), 200);
-
-        walkRight.addFrame(runningSS.getSprite(7, 11), 200);
-
-        walkRight.addFrame(runningSS.getSprite(8, 11), 200);
-
-        thrustRight = new Animation();
-
-        thrustRight.setAutoUpdate(false);
-
-        thrustRight.addFrame(runningSS.getSprite(0, 7), 150);
-        thrustRight.addFrame(runningSS.getSprite(1, 7), 150);
-
-        thrustRight.addFrame(runningSS.getSprite(2, 7), 150);
-
-        thrustRight.addFrame(runningSS.getSprite(3, 7), 150);
-
-        thrustRight.addFrame(runningSS.getSprite(4, 7), 150);
-
-        thrustRight.addFrame(runningSS.getSprite(5, 7), 150);
-
-        thrustRight.addFrame(runningSS.getSprite(6, 7), 150);
-
-        thrustRight.addFrame(runningSS.getSprite(7, 7), 150);
-
-        thrustLeft = new Animation();
-
-        thrustLeft.setAutoUpdate(false);
-
-        thrustLeft.addFrame(runningSS.getSprite(0, 5), 150);
-        thrustLeft.addFrame(runningSS.getSprite(1, 5), 150);
-
-        thrustLeft.addFrame(runningSS.getSprite(2, 5), 150);
-
-        thrustLeft.addFrame(runningSS.getSprite(3, 5), 150);
-
-        thrustLeft.addFrame(runningSS.getSprite(4, 5), 150);
-
-        thrustLeft.addFrame(runningSS.getSprite(5, 5), 150);
-
-        thrustLeft.addFrame(runningSS.getSprite(6, 5), 150);
-
-        thrustLeft.addFrame(runningSS.getSprite(7, 5), 150);
-
-        thrustUp = new Animation();
-
-        thrustUp.setAutoUpdate(false);
-
-        thrustUp.addFrame(runningSS.getSprite(0, 4), 150);
-        thrustUp.addFrame(runningSS.getSprite(1, 4), 150);
-
-        thrustUp.addFrame(runningSS.getSprite(2, 4), 150);
-
-        thrustUp.addFrame(runningSS.getSprite(3, 4), 150);
-
-        thrustUp.addFrame(runningSS.getSprite(4, 4), 150);
-
-        thrustUp.addFrame(runningSS.getSprite(5, 4), 150);
-
-        thrustUp.addFrame(runningSS.getSprite(6, 4), 150);
-
-        thrustUp.addFrame(runningSS.getSprite(7, 4), 150);
-
-        thrustDown = new Animation();
-
-        thrustDown.setAutoUpdate(false);
-
-        thrustDown.addFrame(runningSS.getSprite(0, 6), 150);
-        thrustDown.addFrame(runningSS.getSprite(1, 6), 150);
-
-        thrustDown.addFrame(runningSS.getSprite(2, 6), 150);
-
-        thrustDown.addFrame(runningSS.getSprite(3, 6), 150);
-
-        thrustDown.addFrame(runningSS.getSprite(4, 6), 150);
-
-        thrustDown.addFrame(runningSS.getSprite(5, 6), 150);
-
-        thrustDown.addFrame(runningSS.getSprite(6, 6), 150);
-
-        thrustDown.addFrame(runningSS.getSprite(7, 6), 150);
-
-        wait = new Animation();
-
-        wait.setAutoUpdate(true);
-
-        wait.addFrame(runningSS.getSprite(0, 14), 733);
-
-        wait.addFrame(runningSS.getSprite(1, 14), 733);
-
-        wait.addFrame(runningSS.getSprite(2, 14), 733);
-
-        wait.addFrame(runningSS.getSprite(3, 14), 733);
-
-        // wait.addFrame(runningSS.getSprite(2, 14), 733);
-        // wait.addFrame(runningSS.getSprite(5, 14), 333);
-        sprite = walkDown;
+        sprite = Player.walkDown;
 
         // *****************************************************************
         // Obstacles etc.
         // build a collision map based on tile properties in the TileD map
         Blocked.blocked = new boolean[grassMap.getWidth()][grassMap.getHeight()];
-
-        // System.out.println("Map height:" + grassMap.getHeight());
-        // System.out.println("Map width:" + grassMap.getWidth());
-        // There can be more than 1 layer. You'll check whatever layer has the
-        // obstacles.
-        // You could also use this for planning traps, etc.
-        // System.out.println("Number of tile layers: "
-        // +grassMap.getLayerCount());
-//        System.out.println("The grassmap is " + grassMap.getWidth() + " by "
-//                + grassMap.getHeight());
 
         for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
 
@@ -361,9 +151,6 @@ Treasure grandeprize;
 
                 if ("true".equals(value)) {
 
-                   // System.out.println("The tile at (" + xAxis + ", "
-                    //        + yAxis + ") is blocked.");
-
                     Blocked.blocked[xAxis][yAxis] = true;
 
                 }
@@ -372,46 +159,7 @@ Treasure grandeprize;
 
         }
 
-        //System.out.println("Array length" + Blocked.blocked[0].length);
-
-        // A remarkably similar process for finding hostiles
-        //hostiles = new boolean[grassMap.getWidth()][grassMap.getHeight()];
-//        for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
-//            for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
-//                int xBlock = (int) xAxis;
-//                int yBlock = (int) yAxis;
-//                if (!Blocked.blocked[xBlock][yBlock]) {
-//                    if (yBlock % 7 == 0 && xBlock % 15 == 0) {
-//                        Item i = new Item(xAxis * tileSize, yAxis * tileSize);
-//                        stuff.add(i);
-//                        //stuff1.add(h);
-//                        //   hostiles[xAxis][yAxis] = true;
-//                    }
-//                }
-//            }
-//        }
-
-        for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
-            for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
-                int xBlock = (int) xAxis;
-                int yBlock = (int) yAxis;
-                if (!Blocked.blocked[xBlock][yBlock]) {
-                    if (xBlock % 9 == 0 && yBlock % 25 == 0) {
-                        Item1 h = new Item1(xAxis * tileSize, yAxis * tileSize);
-                        //	stuff.add(i);
-                        stuff1.add(h);
-                        //hostiles[xAxis][yAxis] = true;
-                    }
-                }
-            }
-        }
-
-        //ninja = new Ninja(200, 200);
-//        
-//        healthpotion = new Item(100, 100);
-//        healthpotion1 = new Item(450, 400);
-//        stuff.add(healthpotion);
-//        stuff.add(healthpotion1);
+        
         smallprize = new Treasure(tileSize * 20, tileSize * 15);
         grandprize = new Treasure(tileSize * 7, tileSize * 15);
         grandeprize = new Treasure(tileSize * 17, tileSize * 8);
@@ -425,15 +173,14 @@ Treasure grandeprize;
         indianBow3 = new Enemy(tileSize * 12, tileSize * 5, "down", false);
         indianBow4 = new Enemy(tileSize * 5, tileSize * 8, "right", false);
         indianBow5 = new Enemy(tileSize * 14, tileSize * 11, "up", false);
-        indianBow6= new Enemy(tileSize * 5, tileSize * 20, "up", false);
-        indianBow7= new Enemy(tileSize * 15, tileSize * 21, "up", false);
+        indianBow6 = new Enemy(tileSize * 5, tileSize * 20, "up", false);
+        indianBow7 = new Enemy(tileSize * 15, tileSize * 21, "up", false);
         indianBow8 = new Enemy(tileSize * 20, tileSize * 20, "left", false);
         indianBow9 = new Enemy(tileSize * 20, tileSize * 19, "up", false);
-        // indian2= new Enemy(576, 192);
-        // indian3= new Enemy(650, 100);
+
         enemies.add(indianBow1);
         indianBow1.configBow();
-        
+
         enemies.add(indianBow2);
         indianBow2.configBow();
         enemies.add(indianBow3);
@@ -441,26 +188,17 @@ Treasure grandeprize;
         enemies.add(indianBow4);
         indianBow4.configBow();
         enemies.add(indianBow5);
-        indianBow5.configBow();enemies.add(indianBow6);
-        indianBow6.configBow();enemies.add(indianBow7);
+        indianBow5.configBow();
+        enemies.add(indianBow6);
+        indianBow6.configBow();
+        enemies.add(indianBow7);
         indianBow7.configBow();
         enemies.add(indianBow8);
         indianBow8.configBow();
-         enemies.add(indianBow9);
+        enemies.add(indianBow9);
         indianBow9.configBow();
-        
-        
-        
-        
-        //enemies.add(indian2);
-        //enemies.add(indian3);
-//        speedpotion = new Item1(100, 150);
-//        speedpotion1 = new Item1(450, 100);
-//        stuff1.add(speedpotion);
-//        stuff1.add(speedpotion1);
-//
-//        antidote = new ItemWin(3004, 92);
-//        stuffwin.add(antidote);
+
+
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
@@ -472,42 +210,20 @@ Treasure grandeprize;
 
         camera.translateGraphics();
 
-        // it helps to add status reports to see what's going on
-        // but it gets old quickly
-        // System.out.println("Current X: " +player.x + " \n Current Y: "+ y);
+
         sprite.draw((int) Player.x, (int) Player.y);
 
-        //g.drawString("x: " + (int)player.x + "y: " +(int)player.y , player.x, player.y - 10);
+
         g.drawString("Health: " + Player.health / 1000, camera.cameraX + 10,
                 camera.cameraY + 10);
 
-        //g.drawString("speed: " + (int) (Player.speed * 10), camera.cameraX + 10,
-           //     camera.cameraY + 25);
+
         g.drawString("treasure: " + (int) (Player.gold), camera.cameraX + 10,
                 camera.cameraY + 40);
 
-        //g.draw(Player.rect);
-    //    g.drawString("time passed: " + counter / 1000, camera.cameraX + 600, camera.cameraY);
-        // moveenemies();
 
-//        if (ninja.isvisible) {
-//            ninja.currentImage.draw(ninja.x, ninja.y);
-//                // draw the hitbox
-//            //g.draw(i.hitbox);
-//
-//        }
-        //moveenemies();
         drawenemies();
 
-//        for (Enemy e : enemies) {
-//
-//            g.drawString("" + e.getID(), e.Bx, e.By);
-//
-//            g.drawString("" + e.health, e.Bx, e.By + tileSize / 2);
-//
-//            //g.draw(e.rect);
-//
-//        }
         for (Arrow a : arrows) {
             if (a.isvisible) {
                 a.currentImage.draw(a.x, a.y);
@@ -564,12 +280,6 @@ Treasure grandeprize;
 
         Player.setpdelta(fdelta);
 
-        double rightlimit = (grassMap.getWidth() * tileSize) - (tileSize * 0.75);
-
-        //System.out.println("Right limit: " + rightlimit);
-        float projectedright = Player.x + fdelta + tileSize;
-
-        boolean cangoright = projectedright < rightlimit;
         for (Arrow a : arrows) {
             if (a.direction == "up") {
                 a.y -= Arrow.speed;
@@ -581,7 +291,6 @@ Treasure grandeprize;
                 a.x -= Arrow.speed;
             }
         }
-        //there are two types of fixes. A kludge and a hack. This is a kludge.
         if (attackCounter == 0) {
             attacking = false;
         }
@@ -589,13 +298,13 @@ Treasure grandeprize;
             attacking = true;
             attackCounter = 8;
             if (direction == "up") {
-                sprite = thrustUp;
+                sprite = Player.thrustUp;
             } else if (direction == "down") {
-                sprite = thrustDown;
+                sprite = Player.thrustDown;
             } else if (direction == "left") {
-                sprite = thrustLeft;
+                sprite = Player.thrustLeft;
             } else if (direction == "right") {
-                sprite = thrustRight;
+                sprite = Player.thrustRight;
             }
         }
         if (!(currentsteps > 0) && !attacking) {
@@ -603,26 +312,26 @@ Treasure grandeprize;
             if (input.isKeyDown(Input.KEY_UP)) {
 
                 if (direction != "up") {
-                    sprite = faceUp;
+                    sprite = Player.faceUp;
                     direction = "up";
                     currentsteps = 0;
                 } else {
                     if (currentsteps == 0 && (!isBlocked(Player.x, Player.y - tileSize))) {
                         currentsteps = tileSize / Player.speed;
-                        sprite = walkUp;
+                        sprite = Player.walkUp;
                     }
 
                 }
             } else if (input.isKeyDown(Input.KEY_DOWN)) {
 
                 if (direction != "down") {
-                    sprite = faceDown;
+                    sprite = Player.faceDown;
                     direction = "down";
                     currentsteps = 0;
                 } else {
                     if (currentsteps == 0 && (!isBlocked(Player.x, Player.y + tileSize))) {
                         currentsteps = tileSize / Player.speed;
-                        sprite = walkDown;
+                        sprite = Player.walkDown;
                     }
 
                 }
@@ -630,13 +339,13 @@ Treasure grandeprize;
             } else if (input.isKeyDown(Input.KEY_LEFT)) {
 
                 if (direction != "left") {
-                    sprite = faceLeft;
+                    sprite = Player.faceLeft;
                     direction = "left";
                     currentsteps = 0;
                 } else {
                     if (currentsteps == 0 && (!isBlocked(Player.x - tileSize, Player.y))) {
                         currentsteps = tileSize / Player.speed;
-                        sprite = walkLeft;
+                        sprite = Player.walkLeft;
                     }
 
                 }
@@ -644,13 +353,13 @@ Treasure grandeprize;
             } else if (input.isKeyDown(Input.KEY_RIGHT)) {
 
                 if (direction != "right") {
-                    sprite = faceRight;
+                    sprite = Player.faceRight;
                     direction = "right";
                     currentsteps = 0;
                 } else {
                     if (currentsteps == 0 && (!isBlocked(Player.x + tileSize, Player.y))) {
                         currentsteps = tileSize / Player.speed;
-                        sprite = walkRight;
+                        sprite = Player.walkRight;
                     }
 
                 }
@@ -660,7 +369,6 @@ Treasure grandeprize;
                     Arrow thisArrow = new Arrow(e.getskX(), e.getskY(), e.direction);
                     thisArrow.getImage();
                     arrows.add(thisArrow);
-                    
 
                 }
             }
@@ -695,7 +403,7 @@ Treasure grandeprize;
         for (Treasure i : treasures) {
 
             if (Player.rect.intersects(i.hitbox)) {
-                //System.out.println("yay");
+
                 if (i.isvisible) {
 
                     Player.gold += 100;
@@ -707,64 +415,28 @@ Treasure grandeprize;
 
         for (Arrow a : arrows) {
 
-            //if (Player.rect.intersects(a.hitbox)) {
-                //System.out.println("yay");|| a.y > grassMap.getHeight()
-                if (a.isvisible) {
-                    if((a.x > (grassMap.getWidth() * tileSize)|| a.y > (grassMap.getHeight() * tileSize)) || isBlocked(a.x, a.y)){
-                        
-                        a.isvisible = false;
-                    }
-                    else if(Player.rect.intersects(a.hitbox)){
-                        Player.health -= 10000;
-                        a.isvisible = false;
-                    }
-                    
-                    
-                    //arrows.remove(a);
+            if (a.isvisible) {
+                if ((a.x > (grassMap.getWidth() * tileSize) || a.y > (grassMap.getHeight() * tileSize)) || isBlocked(a.x, a.y)) {
+
+                    a.isvisible = false;
+//                    if (arrows.size() > 1) {
+//                        arrows.remove(a);
+//                    }
+
+                } else if (Player.rect.intersects(a.hitbox)) {
+                    Player.health -= 10000;
+                    a.isvisible = false;
+//                     if (arrows.size() > 1) {
+//                        arrows.remove(a);
+//                    }
                 }
 
-           // }
+                
+            }
+
+            
         }
 
-//        for (Item i : stuff) {
-//
-//            if (Player.rect.intersects(i.hitbox)) {
-//                //System.out.println("yay");
-//                if (i.isvisible) {
-//
-//                    Player.health += 10000;
-//                    i.isvisible = false;
-//                }
-//
-//            }
-//        }
-//
-//        for (Item1 h : stuff1) {
-//
-//            if (Player.rect.intersects(h.hitbox)) {
-//                //System.out.println("yay");
-//                if (h.isvisible) {
-//
-//                    Player.speed += 0.2f;
-//                    h.isvisible = false;
-//                }
-//
-//            }
-//        }
-//
-//        for (ItemWin w : stuffwin) {
-//
-//            if (Player.rect.intersects(w.hitbox)) {
-//                //System.out.println("yay");
-//                if (w.isvisible) {
-//                    w.isvisible = false;
-//                    makevisible();
-//                    sbg.enterState(3, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
-//
-//                }
-//
-//            }
-//        }
 
         for (Enemy e : enemies) {
 
@@ -772,11 +444,11 @@ Treasure grandeprize;
 
         }
         if (!arrows.isEmpty()) {
-            
+
             for (Arrow a : arrows) {
-               
+
                 try {
-                      a.hitbox.setLocation(a.gethitboxX(), a.gethitboxY());
+                    a.hitbox.setLocation(a.gethitboxX(), a.gethitboxY());
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("oops");
                 }
