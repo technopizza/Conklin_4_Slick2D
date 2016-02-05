@@ -63,32 +63,34 @@ public class GoldAndGlory extends BasicGameState {
     public Enemy indianBow7;
     public Enemy indianBow8;
     public Enemy indianBow9;
-
+    
     Treasure smallprize;
     Treasure grandprize;
     Treasure grandeprize;
-
+    
     public ArrayList<Treasure> treasures = new ArrayList();
-
+    
     public ArrayList<Enemy> enemies = new ArrayList();
     public ArrayList<Enemy> enemiesBow = new ArrayList();
-
+    
     public ArrayList<Arrow> arrows = new ArrayList();
-
+    
+    public ArrayList<Orb> orbs = new ArrayList();
+    
     public ArrayList<Item> stuff = new ArrayList();
-
+    
     public ArrayList<Item1> stuff1 = new ArrayList();
-
+    
     public ArrayList<ItemWin> stuffwin = new ArrayList();
-
+    
     private boolean[][] hostiles;
-
+    
     private static TiledMap grassMap;
-
+    
     private static AppGameContainer app;
-
+    
     private static Camera camera;
-
+    
     public static int counter = 0;
 
     // Player stuff
@@ -110,33 +112,33 @@ public class GoldAndGlory extends BasicGameState {
     private static final int SCREEN_WIDTH = tilesX * tileSize;
     private static int currentsteps = 0;
     private static final int SCREEN_HEIGHT = tilesY * tileSize;
-
+    
     public GoldAndGlory(int xSize, int ySize) {
-
+        
     }
-
+    
     public void init(GameContainer gc, StateBasedGame sbg)
             throws SlickException {
-
+        
         gc.setTargetFrameRate(60);
-
+        
         gc.setShowFPS(false);
-
+        
         grassMap = new TiledMap("res/d4.tmx");
-
+        
         camera = new Camera(gc, grassMap);
-
+        
         Player.spriteInit();
-
+        
         sprite = Player.walkDown;
 
         // *****************************************************************
         // Obstacles etc.
         // build a collision map based on tile properties in the TileD map
         Blocked.blocked = new boolean[grassMap.getWidth()][grassMap.getHeight()];
-
+        
         for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
-
+            
             for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
 
                 // int tileID = grassMap.getTileId(xAxis, yAxis, 0);
@@ -145,29 +147,28 @@ public class GoldAndGlory extends BasicGameState {
                 // You should read the TMX file. It's xml, i.e.,human-readable
                 // for a reason
                 int tileID = grassMap.getTileId(xAxis, yAxis, 1);
-
+                
                 String value = grassMap.getTileProperty(tileID,
                         "blocked", "false");
-
+                
                 if ("true".equals(value)) {
-
+                    
                     Blocked.blocked[xAxis][yAxis] = true;
-
+                    
                 }
-
+                
             }
-
+            
         }
-
         
         smallprize = new Treasure(tileSize * 20, tileSize * 15);
         grandprize = new Treasure(tileSize * 7, tileSize * 15);
         grandeprize = new Treasure(tileSize * 17, tileSize * 8);
-
+        
         treasures.add(smallprize);
         treasures.add(grandprize);
         treasures.add(grandeprize);
-
+        
         indianBow1 = new Enemy(tileSize * 10, tileSize * 9, "down", false);
         indianBow2 = new Enemy(tileSize * 10, tileSize * 2, "right", false);
         indianBow3 = new Enemy(tileSize * 12, tileSize * 5, "down", false);
@@ -177,10 +178,10 @@ public class GoldAndGlory extends BasicGameState {
         indianBow7 = new Enemy(tileSize * 15, tileSize * 21, "up", false);
         indianBow8 = new Enemy(tileSize * 20, tileSize * 20, "left", false);
         indianBow9 = new Enemy(tileSize * 20, tileSize * 19, "up", false);
-
+        
         enemies.add(indianBow1);
         indianBow1.configBow();
-
+        
         enemies.add(indianBow2);
         indianBow2.configBow();
         enemies.add(indianBow3);
@@ -197,33 +198,37 @@ public class GoldAndGlory extends BasicGameState {
         indianBow8.configBow();
         enemies.add(indianBow9);
         indianBow9.configBow();
-
-
+        
     }
-
+    
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
             throws SlickException {
-
+        
         camera.centerOn((int) Player.x, (int) Player.y);
-
+        
         camera.drawMap();
-
+        
         camera.translateGraphics();
-
-
+        
         sprite.draw((int) Player.x, (int) Player.y);
-
-
+        
         g.drawString("Health: " + Player.health / 1000, camera.cameraX + 10,
                 camera.cameraY + 10);
-
-
+        
         g.drawString("treasure: " + (int) (Player.gold), camera.cameraX + 10,
                 camera.cameraY + 40);
-
-
+        
         drawenemies();
-
+        
+        for (Orb o : orbs) {
+            if (o.isVisible()) {
+                o.orbImage.draw(o.getPositionX(), o.getPositionY());
+                // draw the hitbox
+                g.draw(o.orbHitbox);
+                
+            }
+        }
+        
         for (Arrow a : arrows) {
             if (a.isvisible) {
                 a.currentImage.draw(a.x, a.y);
@@ -232,7 +237,7 @@ public class GoldAndGlory extends BasicGameState {
 
             }
         }
-
+        
         for (Treasure b : treasures) {
             if (b.isvisible) {
                 b.currentImage.draw(b.x, b.y);
@@ -241,7 +246,7 @@ public class GoldAndGlory extends BasicGameState {
 
             }
         }
-
+        
         for (Item i : stuff) {
             if (i.isvisible) {
                 i.currentImage.draw(i.x, i.y);
@@ -250,7 +255,7 @@ public class GoldAndGlory extends BasicGameState {
 
             }
         }
-
+        
         for (Item1 h : stuff1) {
             if (h.isvisible) {
                 h.currentImage.draw(h.x, h.y);
@@ -259,7 +264,7 @@ public class GoldAndGlory extends BasicGameState {
 
             }
         }
-
+        
         for (ItemWin w : stuffwin) {
             if (w.isvisible) {
                 w.currentImage.draw(w.x, w.y);
@@ -268,18 +273,18 @@ public class GoldAndGlory extends BasicGameState {
 
             }
         }
-
+        
     }
-
+    
     public void update(GameContainer gc, StateBasedGame sbg, int delta)
             throws SlickException {
-
+        
         Input input = gc.getInput();
-
+        
         float fdelta = delta * 0.4f;
-
+        
         Player.setpdelta(fdelta);
-
+        
         for (Arrow a : arrows) {
             if (a.direction == "up") {
                 a.y -= Arrow.speed;
@@ -308,9 +313,9 @@ public class GoldAndGlory extends BasicGameState {
             }
         }
         if (!(currentsteps > 0) && !attacking) {
-
+            
             if (input.isKeyDown(Input.KEY_UP)) {
-
+                
                 if (direction != "up") {
                     sprite = Player.faceUp;
                     direction = "up";
@@ -320,10 +325,10 @@ public class GoldAndGlory extends BasicGameState {
                         currentsteps = tileSize / Player.speed;
                         sprite = Player.walkUp;
                     }
-
+                    
                 }
             } else if (input.isKeyDown(Input.KEY_DOWN)) {
-
+                
                 if (direction != "down") {
                     sprite = Player.faceDown;
                     direction = "down";
@@ -333,11 +338,11 @@ public class GoldAndGlory extends BasicGameState {
                         currentsteps = tileSize / Player.speed;
                         sprite = Player.walkDown;
                     }
-
+                    
                 }
-
+                
             } else if (input.isKeyDown(Input.KEY_LEFT)) {
-
+                
                 if (direction != "left") {
                     sprite = Player.faceLeft;
                     direction = "left";
@@ -347,11 +352,11 @@ public class GoldAndGlory extends BasicGameState {
                         currentsteps = tileSize / Player.speed;
                         sprite = Player.walkLeft;
                     }
-
+                    
                 }
-
+                
             } else if (input.isKeyDown(Input.KEY_RIGHT)) {
-
+                
                 if (direction != "right") {
                     sprite = Player.faceRight;
                     direction = "right";
@@ -361,31 +366,33 @@ public class GoldAndGlory extends BasicGameState {
                         currentsteps = tileSize / Player.speed;
                         sprite = Player.walkRight;
                     }
-
+                    
                 }
+            } else if (input.isKeyDown(Input.KEY_SPACE)) {
+                orbs.add(new Orb(Player.x, Player.y));
             }
             if (currentsteps > 0) {
                 for (Enemy e : enemies) {
                     Arrow thisArrow = new Arrow(e.getskX(), e.getskY(), e.direction);
                     thisArrow.getImage();
                     arrows.add(thisArrow);
-
+                    
                 }
             }
-
+            
         } else {
             sprite.update(delta);
             if (attackCounter > 0) {
                 attackCounter--;
             }
-
+            
             if (!attacking) {
-
+                
                 currentsteps -= 1;
                 if (direction == "up") {
-
+                    
                     Player.y -= Player.speed;
-
+                    
                 } else if (direction == "down") {
                     Player.y += Player.speed;
                 } else if (direction == "left") {
@@ -393,31 +400,31 @@ public class GoldAndGlory extends BasicGameState {
                 } else if (direction == "right") {
                     Player.x += Player.speed;
                 }
-
+                
             }
             moveenemies();
-
+            
         }
         Player.rect.setLocation(Player.getplayershitboxX(), Player.getplayershitboxY());
-
+        
         for (Treasure i : treasures) {
-
+            
             if (Player.rect.intersects(i.hitbox)) {
-
+                
                 if (i.isvisible) {
-
+                    
                     Player.gold += 100;
                     i.isvisible = false;
                 }
-
+                
             }
         }
-
+        
         for (Arrow a : arrows) {
-
+            
             if (a.isvisible) {
                 if ((a.x > (grassMap.getWidth() * tileSize) || a.y > (grassMap.getHeight() * tileSize)) || isBlocked(a.x, a.y)) {
-
+                    
                     a.isvisible = false;
 //                    if (arrows.size() > 1) {
 //                        arrows.remove(a);
@@ -430,66 +437,85 @@ public class GoldAndGlory extends BasicGameState {
 //                        arrows.remove(a);
 //                    }
                 }
-
                 
             }
-
             
         }
-
-
+        
         for (Enemy e : enemies) {
-
+            
             e.rect.setLocation(e.getskhitboxX(), e.getskhitboxY());
-
+            
         }
+        
+        for (Orb o : orbs) {
+            
+            o.setHitBox();
+            
+        }
+        
         if (!arrows.isEmpty()) {
-
+            
             for (Arrow a : arrows) {
-
+                
                 try {
                     a.hitbox.setLocation(a.gethitboxX(), a.gethitboxY());
                 } catch (IndexOutOfBoundsException e) {
-                    System.out.println("oops");
+                   
                 }
-
+                
             }
         }
-
+        
         for (Enemy e : enemies) {
-
+            
             if (Player.rect.intersects(e.rect)) {
-
+                
                 Player.health -= 100;
-
+                
             }
-
+            
         }
-
+        for (Enemy e : enemies) {
+            for (Orb o : orbs) {
+                
+                if (e.rect.intersects(o.orbHitbox)) {
+                    
+                    o.setVisible(false);
+                    
+                }
+                
+            }
+            if (Player.rect.intersects(e.rect)) {
+                
+            }
+            
+        }
+        
         for (int en1 = 0;
                 en1 < Enemy.getNumberOfEnemies();
                 en1++) {
-
+            
             for (int en2 = 0; en2 < Enemy.getNumberOfEnemies(); en2++) {
-
+                
                 if (enemies.get(en1).rect.intersects(enemies.get(en2).rect)) {
-
+                    
                     if (enemies.get(en1).getID() != enemies.get(en2).getID()) {
-
+                        
                         if (enemies.get(en1).health > 0 && enemies.get(en2).health > 0) {
-
+                            
                             enemies.get(en1).health -= 1;
-
+                            
                             enemies.get(en2).health -= 1;
-
+                            
                         }
-
+                        
                     }
-
+                    
                 }
-
+                
             }
-
+            
         }
         Player.health -= counter / 1000;
         if (Player.health
@@ -503,67 +529,67 @@ public class GoldAndGlory extends BasicGameState {
             Player.gold = 0;
             sbg.enterState(3, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
         }
-
+        
     }
-
+    
     public int getID() {
-
+        
         return 1;
-
+        
     }
-
+    
     public void makevisible() {
         for (Item1 h : stuff1) {
-
+            
             h.isvisible = true;
         }
-
+        
         for (Item i : stuff) {
-
+            
             i.isvisible = true;
         }
     }
-
+    
     private boolean isBlocked(float tx, float ty) {
-
+        
         int xBlock = (int) tx / tileSize;
-
+        
         int yBlock = (int) ty / tileSize;
-
+        
         return Blocked.blocked[xBlock][yBlock];
 
         // this could make a better kludge
     }
-
+    
     private void moveenemies() throws SlickException {
-
+        
         for (Enemy e : enemies) {
 
             //  e.setdirection();
             e.move();
-
+            
         }
-
+        
     }
-
+    
     private void drawenemies() throws SlickException {
-
+        
         try {
-
+            
             for (Enemy e : enemies) {
 
                 //System.out.println("The current selection is: " +e.currentanime);
                 e.currentanime.draw(e.Bx, e.By);
-
+                
             }
-
+            
         } catch (IndexOutOfBoundsException e) {
-
+            
             System.err.println("IndexOutOfBoundsException: "
                     + e.getMessage());
-
+            
         }
-
+        
     }
-
+    
 }
