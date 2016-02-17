@@ -71,6 +71,8 @@ public class Enemy {
     private boolean icangoleft;
 
     private boolean icangoright;
+    
+    private boolean isAlive;
 
     private int startX, startY, width = 62, height = 62;
 
@@ -81,6 +83,14 @@ public class Enemy {
     String direction = "down";
     
     public Shape rect;
+
+    public boolean isIsAlive() {
+        return isAlive;
+    }
+
+    public void setIsAlive(boolean isAlive) {
+        this.isAlive = isAlive;
+    }
 
 
     //System.out.println("Right limit: " + rightlimit);
@@ -109,7 +119,7 @@ public class Enemy {
 
         rect = new Rectangle(hitboxX, hitboxY, width, height);
 
-        
+        this.isAlive=true;
 
         int BHealth;
 

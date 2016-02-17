@@ -1,6 +1,8 @@
 package goldandglory;
 
 
+import java.util.ArrayList;
+import java.util.Random;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
@@ -17,21 +19,31 @@ import org.newdawn.slick.geom.Shape;
  */
 public class Orb {
 
-    //public static int speed = 8;
+    public static int speed = 4;
+    public static float speedRotation = 2;
     static int orbWidth = 32;
     static int orbHeight = 32;
     
+    private float rotation;
     private float positionX;
     private float positionY;
     private boolean visible;
+    private int timemoved; 
+    String direction;
+    static ArrayList<Image> orbImagesList = new ArrayList();
     Image orbImage;
     Shape orbHitbox;
-
-    Orb(float posX, float posY) throws SlickException{
+static Random random = new Random();
+    
+    Orb(float posX, float posY, String dir) throws SlickException{
         positionX = posX;
         positionY = posY;
+        direction = dir;
+        timemoved = 0;
         visible = true;
-        orbImage = new Image("res/arrow.png");
+        rotation = random.nextFloat() * 360;
+        //orbImage = new Image("res/obama1.png");
+        orbImage = orbImagesList.get(random.nextInt(orbImagesList.size()));
         orbHitbox = new Rectangle(positionX + (orbWidth / 2), positionY + (orbHeight / 2), orbWidth, orbHeight);
     }
     
@@ -62,5 +74,34 @@ public class Orb {
         this.orbHitbox = new Rectangle(this.getPositionX() + (orbWidth / 2), this.getPositionY()+ (orbHeight / 2), orbWidth, orbHeight);
     
     }
-    
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public int getTimemoved() {
+        return timemoved;
+    }
+
+    public void setTimemoved(int timemoved) {
+        this.timemoved = timemoved;
+    }
+    static void getAllImages() throws SlickException{
+        orbImagesList.add(new Image("res/obama.png"));
+        orbImagesList.add(new Image("res/obama1.png"));
+        orbImagesList.add(new Image("res/obama2.png"));
+        orbImagesList.add(new Image("res/obama3.png"));
+    }
+
+    public float getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
+    }
 }
