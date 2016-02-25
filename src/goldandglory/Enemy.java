@@ -13,69 +13,37 @@ import org.newdawn.slick.geom.Shape;
 
 
 public class Enemy {
-
-
     private static int numberOfEnemies = 0;
-
     private int id;
-
     boolean[][] eblocked = Blocked.getblocked();
-
     private Animation skeleton, skup, skdown, skleft, skright, skwait, skdead, shootUp, shootDown, shootRight, shootLeft;
-
     int SIZE = 64;
-
     //static int crewsize;
  boolean isMove;
-    
     float Bx;
-
     float By;
-
     float projectedright;
-
     float projectedleft;
-
     float projecteddown;
-
     float projectedup;
-
     boolean canmove;
-
     boolean cangoright;
-
     boolean cangoleft;
-
     boolean cangoup;
-
     boolean cangodown;
-
     int health = 100;
-
     Animation currentanime = new Animation();
-
     private float fdelta;
-
     int MapWidth = 50;
-
     int MapHeight = 100;
-
     double rightlimit = (MapWidth * SIZE) - (SIZE * 0.75);
-
     double downlimit = (MapHeight * SIZE) - (SIZE * 0.75);
-
     private boolean icangoup;
-
     private boolean icangodown;
-
     private boolean icangoleft;
-
     private boolean icangoright;
-    
-    private boolean isAlive;
-
+  private boolean isAlive;
     private int startX, startY, width = 62, height = 62;
-
     float hitboxX = this.Bx;
 
     float hitboxY = this.By;
@@ -84,272 +52,11 @@ public class Enemy {
     
     public Shape rect;
 
-    public boolean isIsAlive() {
-        return isAlive;
-    }
-
-    public void setIsAlive(boolean isAlive) {
-        this.isAlive = isAlive;
-    }
-
-
-    //System.out.println("Right limit: " + rightlimit);
-
-    public enum Direction {
-
-
-        UP, DOWN, LEFT, RIGHT, WAIT
-
-    }
-
+    
 
     Direction mydirection;
 
 
-    Enemy(int a, int b) throws SlickException {
-
-
-        Bx = a;
-
-        By = b;
-
-        hitboxX = this.getskhitboxX();
-
-        hitboxY = this.getskhitboxY();
-
-        rect = new Rectangle(hitboxX, hitboxY, width, height);
-
-        this.isAlive=true;
-
-        int BHealth;
-
-        boolean isBAlive = true;
-
-        canmove = true;
-
-        currentanime = skwait;
-
-        id = ++numberOfEnemies;
-
-        this.mydirection = Direction.WAIT;
-
-
-        SpriteSheet skeletonSS = new SpriteSheet("res/indianBow.png", 64, 64, 0);
-
-        skup = new Animation();
-
-        skup.setAutoUpdate(true);
-
-        skup.addFrame(skeletonSS.getSprite(0, 8), 330);
-
-        skup.addFrame(skeletonSS.getSprite(1, 8), 330);
-
-        skup.addFrame(skeletonSS.getSprite(2, 8), 330);
-
-        skup.addFrame(skeletonSS.getSprite(3, 8), 330);
-
-        skup.addFrame(skeletonSS.getSprite(4, 8), 330);
-
-        skup.addFrame(skeletonSS.getSprite(5, 8), 330);
-
-        skup.addFrame(skeletonSS.getSprite(6, 8), 330);
-
-        skup.addFrame(skeletonSS.getSprite(7, 8), 330);
-
-        skup.addFrame(skeletonSS.getSprite(8, 8), 330);
-
-        shootUp = new Animation();
-
-        shootUp.setAutoUpdate(true);
-
-        shootUp.addFrame(skeletonSS.getSprite(0, 16), 330);
-
-        shootUp.addFrame(skeletonSS.getSprite(1, 16), 330);
-
-        shootUp.addFrame(skeletonSS.getSprite(2, 16), 330);
-
-        shootUp.addFrame(skeletonSS.getSprite(3, 16), 330);
-
-        shootUp.addFrame(skeletonSS.getSprite(4, 16), 330);
-
-        shootUp.addFrame(skeletonSS.getSprite(5, 16), 330);
-
-        shootUp.addFrame(skeletonSS.getSprite(6, 16), 330);
-
-        shootUp.addFrame(skeletonSS.getSprite(7, 16), 330);
-
-        shootUp.addFrame(skeletonSS.getSprite(8, 16), 330);
-
-        skdown = new Animation();
-
-        skdown.setAutoUpdate(false);
-
-        skdown.addFrame(skeletonSS.getSprite(0, 10), 330);
-
-        skdown.addFrame(skeletonSS.getSprite(1, 10), 330);
-
-        skdown.addFrame(skeletonSS.getSprite(2, 10), 330);
-
-        skdown.addFrame(skeletonSS.getSprite(3, 10), 330);
-
-        skdown.addFrame(skeletonSS.getSprite(4, 10), 330);
-
-        skdown.addFrame(skeletonSS.getSprite(5, 10), 330);
-
-        skdown.addFrame(skeletonSS.getSprite(6, 10), 330);
-
-        skdown.addFrame(skeletonSS.getSprite(7, 10), 330);
-
-        skdown.addFrame(skeletonSS.getSprite(8, 10), 330);
-
-shootDown = new Animation();
-
-        shootDown.setAutoUpdate(true);
-
-        shootDown.addFrame(skeletonSS.getSprite(0, 18), 330);
-
-        shootDown.addFrame(skeletonSS.getSprite(1, 18), 330);
-
-        shootDown.addFrame(skeletonSS.getSprite(2, 18), 330);
-
-        shootDown.addFrame(skeletonSS.getSprite(3, 18), 330);
-
-        shootDown.addFrame(skeletonSS.getSprite(4, 18), 330);
-
-        shootDown.addFrame(skeletonSS.getSprite(5, 18), 330);
-
-        shootDown.addFrame(skeletonSS.getSprite(6, 18), 330);
-
-        shootDown.addFrame(skeletonSS.getSprite(7, 18), 330);
-
-        shootDown.addFrame(skeletonSS.getSprite(8, 18), 330);
-        
-        
-        skleft = new Animation();
-
-        skleft.setAutoUpdate(false);
-
-        skleft.addFrame(skeletonSS.getSprite(0, 9), 330);
-
-        skleft.addFrame(skeletonSS.getSprite(1, 9), 330);
-
-        skleft.addFrame(skeletonSS.getSprite(2, 9), 330);
-
-        skleft.addFrame(skeletonSS.getSprite(3, 9), 330);
-
-        skleft.addFrame(skeletonSS.getSprite(4, 9), 330);
-
-        skleft.addFrame(skeletonSS.getSprite(5, 9), 330);
-
-        skleft.addFrame(skeletonSS.getSprite(6, 9), 330);
-
-        skleft.addFrame(skeletonSS.getSprite(7, 9), 330);
-
-        skleft.addFrame(skeletonSS.getSprite(8, 9), 330);
-
-shootLeft = new Animation();
-
-        shootLeft.setAutoUpdate(true);
-
-        shootLeft.addFrame(skeletonSS.getSprite(0, 17), 330);
-
-        shootLeft.addFrame(skeletonSS.getSprite(1, 17), 330);
-
-        shootLeft.addFrame(skeletonSS.getSprite(2, 17), 330);
-
-        shootLeft.addFrame(skeletonSS.getSprite(3, 17), 330);
-
-        shootLeft.addFrame(skeletonSS.getSprite(4, 17), 330);
-
-        shootLeft.addFrame(skeletonSS.getSprite(5, 17), 330);
-
-        shootLeft.addFrame(skeletonSS.getSprite(6, 17), 330);
-
-        shootLeft.addFrame(skeletonSS.getSprite(7, 17), 330);
-
-        shootLeft.addFrame(skeletonSS.getSprite(8, 17), 330);
-        
-        
-        skright = new Animation();
-
-        skright.setAutoUpdate(false);
-
-        skright.addFrame(skeletonSS.getSprite(0, 11), 330);
-
-        skright.addFrame(skeletonSS.getSprite(1, 11), 330);
-
-        skright.addFrame(skeletonSS.getSprite(2, 11), 330);
-
-        skright.addFrame(skeletonSS.getSprite(3, 11), 330);
-
-        skright.addFrame(skeletonSS.getSprite(4, 11), 330);
-
-        skright.addFrame(skeletonSS.getSprite(5, 11), 330);
-
-        skright.addFrame(skeletonSS.getSprite(6, 11), 330);
-
-        skright.addFrame(skeletonSS.getSprite(7, 11), 330);
-
-        skright.addFrame(skeletonSS.getSprite(8, 11), 330);
-
-        
-        shootRight = new Animation();
-
-        shootRight.setAutoUpdate(true);
-
-        shootRight.addFrame(skeletonSS.getSprite(0, 19), 330);
-
-        shootRight.addFrame(skeletonSS.getSprite(1, 19), 330);
-
-        shootRight.addFrame(skeletonSS.getSprite(2, 19), 330);
-
-        shootRight.addFrame(skeletonSS.getSprite(3, 19), 330);
-
-        shootRight.addFrame(skeletonSS.getSprite(4, 19), 330);
-
-        shootRight.addFrame(skeletonSS.getSprite(5, 19), 330);
-
-        shootRight.addFrame(skeletonSS.getSprite(6, 19), 330);
-
-        shootRight.addFrame(skeletonSS.getSprite(7, 19), 330);
-
-        shootRight.addFrame(skeletonSS.getSprite(8, 19), 330);
-        
-        
-        
-
-        skwait = new Animation();
-
-        skwait.setAutoUpdate(true); //turn autoupdate to false so he stops
-
-        skwait.addFrame(skeletonSS.getSprite(0, 14), 733);
-
-        skwait.addFrame(skeletonSS.getSprite(1, 14), 733);
-
-        skwait.addFrame(skeletonSS.getSprite(2, 14), 733);
-
-        skwait.addFrame(skeletonSS.getSprite(3, 14), 733);
-
-        
-
-        skdead = new Animation();
-
-        skdead.setAutoUpdate(false); //turn autoupdate to false so he stops
-
-        skdead.addFrame(skeletonSS.getSprite(2, 20), 733);
-
-        skdead.addFrame(skeletonSS.getSprite(3, 20), 733);
-
-        skdead.addFrame(skeletonSS.getSprite(4, 20), 733);
-
-        skdead.addFrame(skeletonSS.getSprite(5, 20), 733);
-
-        
-
-        currentanime = skwait;
-
-
-    }
 
 
     Enemy(int a, int b, String dir,boolean canMove) throws SlickException {
@@ -368,6 +75,8 @@ shootLeft = new Animation();
         direction = dir;
 
         int BHealth;
+        
+        this.isAlive=true;
 
         boolean isBAlive = true;
 
@@ -938,6 +647,23 @@ if (this.canmove){
     public static int getNumberOfEnemies() {
 
         return numberOfEnemies;
+
+    }
+public boolean isIsAlive() {
+        return isAlive;
+    }
+
+    public void setIsAlive(boolean isAlive) {
+        this.isAlive = isAlive;
+    }
+
+
+    //System.out.println("Right limit: " + rightlimit);
+
+    public enum Direction {
+
+
+        UP, DOWN, LEFT, RIGHT, WAIT
 
     }
 

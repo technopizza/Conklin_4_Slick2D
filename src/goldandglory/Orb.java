@@ -20,7 +20,7 @@ import org.newdawn.slick.geom.Shape;
 public class Orb {
 
     public static int speed = 4;
-    public static float speedRotation = 2;
+    public static float speedRotation = 4;
     static int orbWidth = 32;
     static int orbHeight = 32;
     
