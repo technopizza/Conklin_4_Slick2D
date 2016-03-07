@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package dangerdubois;
+package duboiscalypse;
 
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Image;
 
 
 import org.newdawn.slick.Game;
@@ -37,19 +33,19 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 
 
-public class win extends BasicGameState {
+public class lose extends BasicGameState {
 
 
     
 
 
     private StateBasedGame game;
-
+    public Image startimage;
 
     
 
 
-     public win(int xSize, int ySize) {
+     public lose(int xSize, int ySize) {
 
 
 
@@ -64,13 +60,14 @@ public class win extends BasicGameState {
 
 
             throws SlickException {
+    	startimage = new Image("res/LossScreen.png");
 
 
         this.game = game;
 
 
 
-// TODO AutoÃ¢â‚¬Âgenerated method stub
+// TODO AutoÃ¢â‚¬Âgenerated method stub
 
 
     }
@@ -84,16 +81,19 @@ public class win extends BasicGameState {
 
 
             throws SlickException {
+    	
+    	startimage.draw();
 
 
-// TODO AutoÃ¢â‚¬Âgenerated method stub
+
+// TODO AutoÃ¢â‚¬Âgenerated method stub
 
 
         g.setColor(Color.white);
 
 
-        g.drawString("You found the antidote in time!", 380, 200);
-        g.drawString("press 1 to play again", 400, 320);
+        //g.drawString("You LOSE!", 450, 200);
+        //g.drawString("press 1 to try again", 400, 320);
 
 
        
@@ -112,7 +112,7 @@ public class win extends BasicGameState {
             throws SlickException {
 
 
-// TODO AutoÃ¢â‚¬Âgenerated method stub
+// TODO AutoÃ¢â‚¬Âgenerated method stub
 
 
     }
@@ -125,10 +125,10 @@ public class win extends BasicGameState {
     public int getID() {
 
 
-// TODO AutoÃ¢â‚¬Âgenerated method stub
+// TODO AutoÃ¢â‚¬Âgenerated method stub
 
 
-        return 3;
+        return 2;
 
 
     }
@@ -148,15 +148,12 @@ public class win extends BasicGameState {
 
 //                Player.health  = 100000;
 //                Player.speed = 2;
-//                GoldAndGlory.counter = 0;
+//                Unwavering.counter = 0;
+//                ItemWin.isvisible = true;
 //                Player.x = 64;
 //                Player.y = 64;
-                
-                
-                //item.isvisible = true;
-                //item1.isvisible = true;
-                ItemWin.isvisible = true;
-                game.enterState(1, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+//                //redo potions and reset cordinates of player
+//                game.enterState(1, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 
 
                 break;
@@ -193,3 +190,4 @@ public class win extends BasicGameState {
 
 
 }
+

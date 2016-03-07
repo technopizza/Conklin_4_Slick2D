@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dangerdubois;
+package duboiscalypse;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -14,20 +14,19 @@ import org.newdawn.slick.geom.Shape;
  *
  * @author jconklin2391
  */
-public class Item {
+public class ItemWin {
     public int x;
 	public int y;
-	public boolean isvisible = true;
+	public static boolean isvisible = true;
 	Image currentImage;
 	Shape hitbox;
-	Image healthpotion = new Image(
-			"res/health_potion.png");
+	Image antidote = new Image("res/antidote.png");
 
-	Item(int a, int b) throws SlickException {
+	ItemWin (int a, int b) throws SlickException {
 		this.x = a;
 		this.y = b;
 		this.hitbox = new Rectangle(a, b, 32, 32);// 64 is the width of the item
-		this.currentImage = healthpotion;
+		this.currentImage = antidote;
 
 	}
 }

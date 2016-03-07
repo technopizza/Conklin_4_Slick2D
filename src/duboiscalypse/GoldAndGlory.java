@@ -1,4 +1,4 @@
-package dangerdubois;
+package duboiscalypse;
 
 import org.newdawn.slick.state.*;
 
@@ -135,7 +135,7 @@ public class GoldAndGlory extends BasicGameState {
 
         grassMap = new TiledMap("res/d4.tmx");
 
-        duBois.spriteInit("res/explorer.png");
+        duBois.spriteInit("res/duboisprite.png");
 
         camera = new Camera(gc, grassMap);
 
@@ -149,6 +149,7 @@ public class GoldAndGlory extends BasicGameState {
         // Obstacles etc.
         // build a collision map based on tile properties in the TileD map
         Blocked.blocked = new boolean[grassMap.getWidth()][grassMap.getHeight()];
+        Mine.minesArray = new boolean[grassMap.getWidth()][grassMap.getHeight()];
 
         for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
 
@@ -173,6 +174,29 @@ public class GoldAndGlory extends BasicGameState {
             }
 
         }
+//        for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
+//
+//            for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
+//
+//                // int tileID = grassMap.getTileId(xAxis, yAxis, 0);
+//                // Why was this changed?
+//                // It's a Different Layer.
+//                // You should read the TMX file. It's xml, i.e.,human-readable
+//                // for a reason
+//                int tileID = grassMap.getTileId(xAxis, yAxis, 2);
+//
+//                String value = grassMap.getTileProperty(tileID,
+//                        "mine", "false");
+//
+//                if ("true".equals(value)) {
+//
+//                    Mine.minesArray[xAxis][yAxis] = true;
+//
+//                }
+//
+//            }
+//
+//        }
 
         smallprize = new Treasure(tileSize * 20, tileSize * 15);
         grandprize = new Treasure(tileSize * 7, tileSize * 15);
@@ -458,7 +482,8 @@ public class GoldAndGlory extends BasicGameState {
                 } else if (direction == "right") {
                     duBois.setPositionX(duBois.getPositionX() + duBois.getSpeed());
                 }
-
+duBois.setHitBoxPositionX(duBois.getPositionX());
+duBois.setHitBoxPositionY(duBois.getPositionY());
             }
             moveenemies();
 

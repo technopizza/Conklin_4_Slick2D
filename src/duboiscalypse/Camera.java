@@ -1,4 +1,4 @@
-package dangerdubois;
+package duboiscalypse;
 
 
 import org.newdawn.slick.GameContainer;

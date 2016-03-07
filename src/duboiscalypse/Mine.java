@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dangerdubois;
+package duboiscalypse;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,6 +19,8 @@ import org.newdawn.slick.geom.Shape;
  * @author jconklin2391
  */
 public class Mine {
+    
+    static boolean[][] minesArray;
     
     private static int hitBoxWidth = 32;
     private static int hitBoxHeight = 32;
